@@ -1,0 +1,14 @@
+%% 2.2 Reading Images 
+f = imread('cameraman.jpg');
+size(f, 1)
+whos f
+%% 2.3 Displaying Images
+%imshow(f), figure, 
+%imshow(f, []), figure,
+%imtool(f)
+%% 2.4 Writing Images
+imwrite(f, 'camNew.jpg')
+%% 2.5 Data Classes
+s = class(f)
+%% 2.6 Image types
+A = 
