@@ -1,2 +1,0 @@
-f = imread('cameraman.jpg');
-size

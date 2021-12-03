@@ -80,9 +80,10 @@ fp = f(end:-1:1,:);
 fc = f(1:10:end, 1:10:end);
 %imshow(fc);
 fd = f(234:578,234:578);
-fv = f*0.9;
+fv = f*0.;
 imshow(fv);
 %plot(f(987,:))
+
 %% 2.9 Intro to MATLAB
 %% 2.10 Plotting
 %% 2.11 Interactive I/0
