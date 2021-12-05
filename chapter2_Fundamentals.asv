@@ -129,6 +129,86 @@ M = 1200;
 A = rand(M);
 B = rand(M);
 h = @() A + B;
-timeit(h)
+timeit(h);
+%% Code Optimization
+tic;
+sinfun1(100);
+toc;
+M = 100;
+h = @() sinfun1(M);
+%timeit(h);
+M = 500:500:20000;
+for k = 1:numel(M)
+    h = @() sinfun3(M(k));
+    t1(k) = timeit(h);
+end
+%% Cell Array
+
 %% 2.10 Plotting
+x = linspace(-2*pi, 2*pi, 50);
+y1 = sin(x);
+y2 = cos(x);
+figure, plot(x, y1, 'ro');
+hold on;
+plot(x, y1,'k--');
+hold off;
+figure, plot(x, y1, 'g-', 'LineWidth', 2);
+hold on
+plot(x, y2, 'm--', 'LineWidth', 0.5);
+hold off
+title('Plots of sine and cosine');
+xlabel('Radians');
+ylabel('Amplitude');
+ax = gca;
+ax.XLim = [-8 8];
+ax.YLim = [-1 1];
+ax.XTick = [-8:4:8];
+ax.YTick = [-1:0.5:1];
+ax.Color = [228, 221, 218]/255;
+ax.FontName = 'Times Ten';
+ax.FontSize = 10;
+%% Bar
+f = imread('cameraman.tif');
+h = imhist(f, 20);
+size(h)
+horz = linspace(0, 255, 20);
+figure, bar(horz, h, 'FaceColor', [0 .5 .5], 'EdgeColor', [0 .9 .9], 'LineWidth', 0.75);
+ax = gca;
+ax.YTick = 0:1:4;
+ax.FontName = 'Times Ten';
+ax.FontSize = 8;
+%% Stem
+f =imread('cameraman.tif');
+h = imhist(f, 20);
+horz = linspace(0, 255, 20);
+figure, stem(horz, h, 'filled', 'bo-', 'LineWidth', 0.5)
+ax = gca;
+ax.Color = [179, 207, 227]/255;
+axis tight;
+ax.YLim = [0 ceil(1.1*max(h(:)))];
+ax.YTick = 0:100000:round(1.1*max(h(:)));
+ax.FontName = 'Times Ten';
+ax.FontSize = 8;
+%% Plot
+f =imread('cameraman.tif');
+h = imhist(f);
+figure, plot(h, 'Color', [112 28 25]/255, 'LineWidth', 1.0)
+axis tight
+ax = gca;
+ax.Color = [228, 221, 218]/255;
+ax.FontName = 'Times Ten';
+ax.FontSize = 8;
+%% F Plot
+fhandle = @tanh;
+fplot(fhandle, [-2 ,2], ':')
+%% 3D Plots
+%% Mesh
+x = -2:0.1:2;
+y = x';
+z = x.*exp(-x.^2 - y.^2);
+mesh(z);
+grid on
+axis on
+zlabel()
+
 %% 2.11 Interactive I/O
