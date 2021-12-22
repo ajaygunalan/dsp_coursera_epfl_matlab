@@ -77,12 +77,72 @@ fe = histeq(f, 100);
 figure, imshow(fe);
 g = adapthisteq(f,'ClipLimit',0.4,'Distribution','exponential','NumTiles',[12 12]);
 figure, imshow(g);
-
-
-
-
-
-
 %% 3.4 Linear Spatial Filtering
+f = im2double(rgb2gray(imread('four-squares.jpg')));
+figure, imshow(f);
+w = ones(31);
+gd = imfilter(f, w);
+figure, imshow(gd, []);
+gr = imfilter(f, w, 'replicate');
+figure, imshow(gr, []);
+gs = imfilter(f, w, 'symmetric');
+figure, imshow(gs, []);
+gc = imfilter(f, w, 'circular');
+figure, imshow(gc, []);
+f8 = im2uint8(f);
+g8r = imfilter(f8,w,'replicate');
+figure, imshow(g8r, []);
+%% Fspecial and Imfilter for image smoothing
+f = imread('test_pattern.tif');
+figure, imshow(f);
+[M N] = size(f);
+sig = 0.01*M;
+r = ceil(6*sig);
+r = r -1;
+w1 = fspecial('gaussian',r,sig);
+g1 = imfilter(f, w1, 'replicate');
+figure, imshow(g1);
+%% Using functions Fspecial and imfilter for image sharpening
+w = fspecial('laplacian',0);
+f = imread('moon-blurry.tif');
+figure, imshow(f);
+g1 = imfilter(f ,w, 'replicate');
+figure, imshow(g1, []);
+f2 =im2double(f);
+g2 = imfilter(f2, w, 'replicate');
+figure, imshow(g2, []);
+g = f2 - g2;
+figure, imshow(g);
+%% Manually Specifying Kernels and Compare Enhancement Techniques
+f = im2double(imread('moon-blurry.tif'));
+figure, imshow(f);
+w4 = fspecial('laplacian',0);
+w8 = [1 1 1; 1 -8 1;1 1 1];
+g4 = f - imfilter(f, w4, 'replicate');
+g8 = f - imfilter(f, w8, 'replicate');
+figure, imshow(g4);
+figure, imshow(g8);
+%% Highpass filters from lowpass filters.
+lp1d = fir1(128,0.1);
+figure, plot(lp1d);
+w1LP2d = (lp1d')*lp1d;
+w2LP2d = ftrans2(lp1d);
+figure, mesh(w1LP2d(1:2:end, 1:2:end));
+figure, mesh(w2LP2d(1:2:end, 1:2:end));
+f = rgb2gray(im2double(imread('zoneplate.jpg')));
+figure, imshow(f);
+gLP1 = imfilter(f, w1LP2d, 'replicate');
+gLP2 = imfilter(f, w2LP2d, 'replicate');
+figure, imshow(gLP1);
+figure, imshow(gLP2);
+%% Unsharp Masking Filters
+f = rgb2gray(imread('blurryImage.jpg'));
+figure, imshow(f);
+g1 = imsharpen(f);
+%figure, imshow(g1);
+g2 = imsharpen(f, 'Radius', 5);
+%figure, imshow(g2);
+g3 = imsharpen(f, 'Radius', 5, 'Amount', 2, 'Threshold', 0.05);
+figure, imshow(g3);
 %% 3.5 Nonlinear Spatial Filtering
 %% 3.6 Using Fuzzy Sets for Intensity Transformations and Spatial Filtering
