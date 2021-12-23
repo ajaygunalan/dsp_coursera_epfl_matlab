@@ -166,13 +166,5 @@ g = g(1:M - 2*m, 1:N -2*n);
 
 % Display the result
 figure, imshow(g);
-%% Median Filtering Using function medfilt2
-f = imread('circuitboard.tif');
-fn = imnoise(f, 'salt & pepper', 0.2);
-figure, imshow(f);
-figure, imshow(fn);
-gm = medfilt2(fn);
-gms = medfilt2(fn, 'symmetric');
-figure, imshow(gm);
-figure, imshow(gms);
+
 %% 3.6 Using Fuzzy Sets for Intensity Transformations and Spatial Filtering
