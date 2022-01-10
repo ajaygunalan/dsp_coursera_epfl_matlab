@@ -176,3 +176,102 @@ gms = medfilt2(fn, 'symmetric');
 figure, imshow(gm);
 figure, imshow(gms);
 %% 3.6 Using Fuzzy Sets for Intensity Transformations and Spatial Filtering
+f1 = makecounter(0);
+f2 = makecounter(20);
+g = @(x) 1./x;
+f = @sin;
+h = compose12(f, g);
+fplot(h, [-1 1], 20);
+triangmf();
+%% Generating handles for the input membership functions
+ulow = @(z) 1 - sigmamf(z, 0.27, 0.47);
+umid = @(z) triangmf(z, 0.24, 0.50, 0.74);
+uhigh = @(z) sigmamf(z, 0.53, 0.73);
+fplot(ulow, [0 1]);
+hold on
+fplot(umid, [0 1], '-.');
+fplot(uhigh, [0 1], '--');
+hold off;
+title('Input Memebership fucntions of Example 3.18');
+unorm = @(z) 1 - sigmamf(z, 0.18, 0.33);
+umarg = @(z) triangmf(z, 0.23, 0.35, 0.53, 0.69);
+ufail = @(z) sigmamf(z, 0.59, 0.78);
+rules = {ulow, umid, uhigh};
+L = lambdafcns(rules);
+z = 0.7;
+outputmfs = {unorm, umarg, ufail};
+Q = implfcns(L, outputmfs, z);
+Qa = aggfcn(Q);
+F = fuzzysysfcn(rules, outputmfs, [0 1]);
+final_result = defuzzify(Qa,[0 1]);
+%% Using Fuzzy Sets for Intensity Transformations
+% Specify the input memebership functions
+udark = @(z) 1 - sigmamf(z, 0.35, 0.5);
+ugray = @(z) triangmf(z, 0.35, 0.5, 0.65);
+ubright = @(z) sigmamf(z, 0.5, 0.65);
+
+% Plot the input memberhsip functions
+fplot(udark, [0 1], 20)
+hold on
+fplot(ugray, [0 1])
+fplot(ubright, [0 1])
+hold off
+
+% Specify the output memebership functions
+udarker = @(z) bellmf(z, 0.0, 0.1);
+umidgray = @(z) bellmf(z, 0.4, 0.5);
+ubrighter = @(z) bellmf(z, 0.8, 0.9);
+
+% Obtain the fuzzy system response function
+rules = {udark; ugray; ubright};
+outmf = {udarker; umidgray; ubrighter};
+F = fuzzysysfcn(rules, outmf, [0 1 ]);
+
+% Use F to construct an intensity transformation fucntion
+z = linspace(0, 1 , 256);
+T = F(z);
+
+% Transform the intensities of f using T
+f = imread('einstein.tif');
+figure,imshow(f);
+g = intensityTransformations(f, 'specified', T);
+figure, imshow(g);
+%% Using Fuzzy Sets for Spatial Filtering
+
+% Input membership functions
+zero = @(z) bellmf(z, -0.3, 0);
+not_used = @(z) onemf(z);
+
+% Output memberhsip fucntions
+black = @(z) triangmf(z, 0, 0, 0.75);
+white = @(z) triangmf(z, 0.25, 1, 1);
+
+% There are four rules and four inputs, so the inmf matrix is 4*4. Each
+% row of the inmf matrrix corresponds to one rule
+inmf = {zero, not_used, zero, not_used
+    not_used, not_used, zero, zero
+    not_used, zero, not_used, zero
+    zero, zero, not_used, not_used}
+
+% Specify cell array of output memberhsip functons, OUTMF (see function
+% IMPLFCNS). There are four IF-THEN rules in this problems, all resultingù
+% in WHITE, and one ELSE rule resulting in BLACK. (see Fig. 3.40)
+outmf = {white, white, white, white, black};
+
+% Inputs to the output membership fuctions are in the range [0, 1]
+vrange = [0, 1];
+
+F = fuzzysysfcn(inmf, outmf, vrange);
+
+% Compute a lookup-table-based approximation to the fuzzy system
+%  function. Each of four inouts is in the range [-1 1].
+G = approxfcn(F, [-1 1;-1 1;-1 1;-1 1]);
+
+save fuzzyedgesys G
+
+fuzzyfilt
+%% 
+f = imread('head.tif');
+figure, imshow(f);
+g = fuzzyfilt(f);
+figure, imshow(g);
