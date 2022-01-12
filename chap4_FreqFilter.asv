@@ -37,34 +37,41 @@ gpc = gp(1:size(f,1),1:size(f,2));
 gpc = revertClass(gpc);
 figure, imshow(gpc);
 %% 4.4 Obtaining Transfer Function from Spatial Kernels
-%% Spatial Domain
+% Spatial Domain
 f = imread('building.tif');
 figure, imshow(f);
-h = fspecial('sobel')'; % transpose fspecial('sobel') by '
-figure, display(h);
-gs = imfilter(f,h);
-figure, imshow(gs,[]);
-figure, imshow(abs(gs),[]);
-figure, imshow(abs(gs)> 0.2*abs(max(gs(:))),[]);
-%% Frequency Domain
-f = imread('building.tif');
-figure, imshow(f);
-[f, revertClass] = tofloat(f);
+% PQ = paddedsize(size(f));
+% H = freqz2(h, PQ(1), PQ(2));
+% H1 = ifftshift(H);
+% figure, imshow(abs(H),[]);
+% figure, imshow(abs(H1),[]);
+% gs = imfilter(f,h);
+% gf = dftfilt(f,H1);
+% figure, imshow(gs,[]);
+% figure, imshow(gf,[]);
+% figure, imshow(abs(gs),[]);
+% figure, imshow(abs(gf),[]);
+% figure, imshow(abs(gs)> 0.2*abs(max(gs(:))),[]);
+% figure, imshow(abs(gf)> 0.2*abs(max(gs(:))),[]);
+f = tofloat(f);
 F = fft2(f);
 S = fftshift(log(1 + abs(F)));
-figure, imshow(S, []); 
-PQ = paddedsize(size(f));
-h = fspecial('sobel')'; % from Spatial Domain
-gs = imfilter(f,h); % from Spatial Domain
-H = freqz2(h, PQ(1), PQ(2)); % Genereates Freq response from a sptail Kernel
-H1 = ifftshift(H);
-figure, imshow(abs(H),[]);
-figure, imshow(abs(H1),[]);
-gf = dftfilt(f,H1);
-figure, imshow(gf,[]);
-figure, imshow(abs(gf),[]);
-figure, imshow(abs(gf)> 0.2*abs(max(gs(:))),[]);
-% Difference between gs and gf
-d = abs(gs-gf);
-disp(max(d(:)));
-%% 4.5  
+figure, imshow(S, []);
+h = fspecial('sobel')'; % transpose fspecial('sobel') by '
+figure, display(h);
+freqz2(h);
+% PQ = paddedsize(size(f));
+% H = freqz2(h, PQ(1), PQ(2));
+% H1 = ifftshift(H);
+% figure, imshow(abs(H),[]);
+% figure, imshow(abs(H1),[]);
+% gs = imfilter(f,h);
+% gf = dftfilt(f,H1);
+% figure, imshow(gs,[]);
+% figure, imshow(gf,[]);
+% figure, imshow(abs(gs),[]);
+% figure, imshow(abs(gf),[]);
+% figure, imshow(abs(gs)> 0.2*abs(max(gs(:))),[]);
+% figure, imshow(abs(gf)> 0.2*abs(max(gs(:))),[]);
+% d = abs(gs-gf);
+% disp(max(d(:)));
