@@ -37,41 +37,78 @@ gpc = gp(1:size(f,1),1:size(f,2));
 gpc = revertClass(gpc);
 figure, imshow(gpc);
 %% 4.4 Obtaining Transfer Function from Spatial Kernels
-% Spatial Domain
+%% Spatial Domain
 f = imread('building.tif');
 figure, imshow(f);
-% PQ = paddedsize(size(f));
-% H = freqz2(h, PQ(1), PQ(2));
-% H1 = ifftshift(H);
-% figure, imshow(abs(H),[]);
-% figure, imshow(abs(H1),[]);
-% gs = imfilter(f,h);
-% gf = dftfilt(f,H1);
-% figure, imshow(gs,[]);
-% figure, imshow(gf,[]);
-% figure, imshow(abs(gs),[]);
-% figure, imshow(abs(gf),[]);
-% figure, imshow(abs(gs)> 0.2*abs(max(gs(:))),[]);
-% figure, imshow(abs(gf)> 0.2*abs(max(gs(:))),[]);
-f = tofloat(f);
-F = fft2(f);
-S = fftshift(log(1 + abs(F)));
-figure, imshow(S, []);
 h = fspecial('sobel')'; % transpose fspecial('sobel') by '
 figure, display(h);
-freqz2(h);
-% PQ = paddedsize(size(f));
-% H = freqz2(h, PQ(1), PQ(2));
-% H1 = ifftshift(H);
-% figure, imshow(abs(H),[]);
-% figure, imshow(abs(H1),[]);
-% gs = imfilter(f,h);
-% gf = dftfilt(f,H1);
-% figure, imshow(gs,[]);
-% figure, imshow(gf,[]);
-% figure, imshow(abs(gs),[]);
-% figure, imshow(abs(gf),[]);
-% figure, imshow(abs(gs)> 0.2*abs(max(gs(:))),[]);
-% figure, imshow(abs(gf)> 0.2*abs(max(gs(:))),[]);
-% d = abs(gs-gf);
-% disp(max(d(:)));
+gs = imfilter(f,h);
+figure, imshow(gs,[]);
+figure, imshow(abs(gs),[]);
+figure, imshow(abs(gs)> 0.2*abs(max(gs(:))),[]);
+%% Frequency Domain
+f = imread('building.tif');
+figure, imshow(f);
+[f, revertClass] = tofloat(f);
+F = fft2(f);
+S = fftshift(log(1 + abs(F)));
+figure, imshow(S, []); 
+PQ = paddedsize(size(f));
+h = fspecial('sobel')'; % from Spatial Domain
+gs = imfilter(f,h); % from Spatial Domain
+H = freqz2(h, PQ(1), PQ(2)); % Genereates Freq response from a sptail Kernel
+H1 = ifftshift(H);
+figure, imshow(abs(H),[]);
+figure, imshow(abs(H1),[]);
+gf = dftfilt(f,H1);
+figure, imshow(gf,[]);
+figure, imshow(abs(gf),[]);
+figure, imshow(abs(gf)> 0.2*abs(max(gs(:))),[]);
+% Difference between gs and gf
+d = abs(gs-gf);
+disp(max(d(:)));
+%% 4.5 Generating Filter Transfer Fucntion in Frequency Domian
+[U V] = dftuv(8,5);
+DSQ = hypot(U,V).^2;
+round(DSQ)
+fftshift(DSQ)
+%% Low Pass Filter
+f = imread('testPattern.tif');
+figure, imshow(f);
+PQ = paddedsize(size(f));
+D0 = 50;
+ILP = lpfilter('ideal', PQ(1), PQ(2), D0);
+gLP = dftfilt(f, ILP, 'symmetric');
+figure, imshow(gLP);
+%% 4.6 Highpass Filtering in the Frequency Domain
+f = imread('testPattern.tif');
+figure, imshow(f);
+PQ = paddedsize(size(f));
+D0 = 50;
+HLPG = hpfilter('Gaussian', PQ(1), PQ(2), D0);
+gLPG = dftfilt(f, HLPG, 'symmetric');
+figure, imshow(gLPG);
+gLPGS = intensityScaling(gLPG);
+figure, imshow(gLPGS);
+%%
+f = imread('chest_xray.tif');
+figure, imshow(f);
+PQ = paddedsize(size(f));
+D0 = round(0.05*PQ(1));
+H = hpfilter('butterworth', PQ(1), PQ(2), D0, 2);
+ghp = dftfilt(f, H, 'symmetric');
+ghps = intensityScaling(ghp);
+figure, imshow(ghps);
+Hemp = 0.5 + 2.0*H;
+gemp = dftfilt(f, Hemp, 'Symmetric');
+gemps = intensityScaling(gemp);
+figure, imshow(gemps);
+geq = histeq(gemp, 256);
+figure, imshow(geq);
+%% 4.7 Bandreject, Bandpass, Notchreject, Notchpass Filtering
+f = rgb2gray(imread('zoneplateCh4.jpg'));
+[M,N] = size(f);
+HLP = lpfilter('butterworth', M, N, 15,3);
+gLP = dftfilt(f, HLP,'zeros');
+figure, imshow(gLP);
+HBR = bandfilter('butterworth', 'reject', );

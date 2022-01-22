@@ -67,4 +67,50 @@ figure, imshow(abs(gf)> 0.2*abs(max(gs(:))),[]);
 % Difference between gs and gf
 d = abs(gs-gf);
 disp(max(d(:)));
-%% 4.5  
+%% 4.5 Generating Filter Transfer Fucntion in Frequency Domian
+[U V] = dftuv(8,5);
+DSQ = hypot(U,V).^2;
+round(DSQ)
+fftshift(DSQ)
+%% Low Pass Filter
+f = imread('testPattern.tif');
+figure, imshow(f);
+PQ = paddedsize(size(f));
+D0 = 50;
+ILP = lpfilter('ideal', PQ(1), PQ(2), D0);
+gLP = dftfilt(f, ILP, 'symmetric');
+figure, imshow(gLP);
+%% 4.6 Highpass Filtering in the Frequency Domain
+f = imread('testPattern.tif');
+figure, imshow(f);
+PQ = paddedsize(size(f));
+D0 = 50;
+HLPG = hpfilter('Gaussian', PQ(1), PQ(2), D0);
+gLPG = dftfilt(f, HLPG, 'symmetric');
+figure, imshow(gLPG);
+gLPGS = intensityScaling(gLPG);
+figure, imshow(gLPGS);
+%%
+f = imread('chest_xray.tif');
+figure, imshow(f);
+PQ = paddedsize(size(f));
+D0 = round(0.05*PQ(1));
+H = hpfilter('butterworth', PQ(1), PQ(2), D0, 2);
+ghp = dftfilt(f, H, 'symmetric');
+ghps = intensityScaling(ghp);
+figure, imshow(ghps);
+Hemp = 0.5 + 2.0*H;
+gemp = dftfilt(f, Hemp, 'Symmetric');
+gemps = intensityScaling(gemp);
+figure, imshow(gemps);
+geq = histeq(gemp, 256);
+figure, imshow(geq);
+%% 4.7 Bandreject, Bandpass, Notchreject, Notchpass Filtering
+f = rgb2gray(imread('zoneplateCh4.jpg'));
+[M,N] = size(f);
+HLP = lpfilter('butterworth', M, N, 15,3);
+gLP = dftfilt(f, HLP,'zeros');
+figure, imshow(gLP);
+HBR = bandfilter('butterworth', 'reject',M, N, 30,8,3);
+gBR = intensityScaling(dftfilt(f, HBR,'zeros'));
+figure, imshow(gBR);
