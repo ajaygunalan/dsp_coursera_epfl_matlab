@@ -111,4 +111,48 @@ f = rgb2gray(imread('zoneplateCh4.jpg'));
 HLP = lpfilter('butterworth', M, N, 15,3);
 gLP = dftfilt(f, HLP,'zeros');
 figure, imshow(gLP);
-HBR = bandfilter('butterworth', 'reject', );
+HBR = bandfilter('butterworth', 'reject',M, N, 30,8,3);
+gBR = intensityScaling(dftfilt(f, HBR,'zeros'));
+figure, imshow(gBR);
+%% Notch
+f = tofloat(imread('car4.tif'));
+figure, imshow(f);
+[M, N] = size(f);
+F = fft2(f);
+% Obtain the specturm and show it as a scaled image
+S = intensityScaling(log(1+abs(fftshift(F))));
+figure, imshow(S);
+% Use function impixelinfo to obatain the cordinates of the spikes interactively.
+% Keep in mind the coordinates in impixelinfo are (col,row) coordinates, but we use
+% (row, col) coordinates in cnotch
+C1 = [99 154; 128 163];
+% Generate the notch transfer fucntion
+H1 = cnotch('gaussian','reject',M,N,C1,5);
+% Compute the specturm of the filtered transform and show it as an Image
+S1 = intensityScaling(fftshift(H1).*(tofloat(S)));
+figure, imshow(S1);
+% Filter the image and show the result
+f1 = dftfilt(f, H1);
+figure, imshow(f1);
+% Repeat with the following C2 to reduce the higher frequency interference
+% Components
+C2 = [99 154;128 163;49 160;133 233;55 132;108 225;112 74];
+H2 = cnotch('gaussian', 'reject', M,N,C2,5);
+% Compute the specturm of the filtered transform and show it as an image
+P2 = intensityScaling(fftshift(H2).*(tofloat(S)));
+figure, imshow(P2);
+% Filter the image and display the result
+f2 = dftfilt(f, H2);
+figure, imshow(f2);
+f1r = imresize(f1, 1.5);
+f2r = imresize(f2, 1.5);
+figure, imshow(f1r);
+figure, imshow(f2r);
+%%
+g = tofloat(imread('cassini.tif'));
+figure, imshow(g);
+[M,N] = size(g);
+F = fft2(g);
+S = intensityScaling(log(1+abs(fftshift(F))));
+figure, imshow(S);
+H = renotch('reject','vertical',M,N);
