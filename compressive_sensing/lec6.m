@@ -1,4 +1,4 @@
-clear all, close all, clc;
+clear all, clc;
 
 %% Solve y = theta * s for "s"
 n = 1000;   % dimension for S

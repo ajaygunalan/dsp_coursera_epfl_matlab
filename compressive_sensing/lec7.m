@@ -1,4 +1,4 @@
-clear all, close all, clc;
+clear all, clc;
 %% Generate audio signal of two tones.
 n = 4096;
 t = linspace(0, 1, n);
