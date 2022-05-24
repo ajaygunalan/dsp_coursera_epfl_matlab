@@ -6,3 +6,6 @@
 ### Shearlets
 1. http://shearlab.math.lmu.de/
 
+### NPTEL
+1. https://nptel.ac.in/courses/117105081
+
