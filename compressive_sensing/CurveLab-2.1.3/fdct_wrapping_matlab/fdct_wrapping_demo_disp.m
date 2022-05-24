@@ -24,7 +24,7 @@ ix = ix./n; iy = iy./n;
 X = ((ix.^2 + iy.^2) <= .33^2) .* exp( - 2.*ix.^2 - 2.*iy.^2 ); 
 alpha = pi/2 + pi/8;
 X = (cos(alpha).*ix + sin(alpha).*iy >= 0).*exp(-16.*ix.^2- 16.*iy.^2 );
-
+X = rescale(load_image(name, 256));
 %forward curvelet transform
 disp('Take curvelet transform: fdct_wrapping');
 tic; C = fdct_wrapping(X,0); toc;

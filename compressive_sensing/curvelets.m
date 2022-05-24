@@ -1,2 +1,11 @@
-clear all, close all, clc
-getd = @(p)path(p,path);
+name = 'data\lena';
+M = rescale(load_image(name, 256));
+options.null = 0;
+options.finest = 1;
+options.nbscales = 4;
+options.nbangles_coarse = 16;
+options.is_real = 1;
+options.n = n;
+MW = perform_curvelet_transform(M, options);
+clf;
+plot_curvelet(MW, options);
