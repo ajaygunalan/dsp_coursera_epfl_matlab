@@ -11,19 +11,17 @@ options.n = 256;
 MW = perform_curvelet_transform(M, options);
 clf;
 plot_curvelet(MW, options);
-disp = fdct_wrapping_dispcoef(MW);
-imshow(disp);
+% disp = fdct_wrapping_dispcoef(MW);
+% imshow(disp);
 %% https://www.section.io/engineering-education/how-to-denoise-images-using-curvelet-transform-in-matlab/#curvelet-toolbox
 clear all, close all, clc
 img = double(imread('data\lena.tif'));
-optReal = 1;
+optReal = 0;
 optFinest = 1;
-optNbscales =  3;
-optNbscalesCoarse = 4;
 
 % fwd transform
 fprintf("True");
-C = fdct_wrapping(img, optReal, optFinest, optNbscales);
+C = fdct_wrapping(img, optReal, optFinest);
 disp = fdct_wrapping_dispcoef(C);
 imshow(disp);
 
@@ -42,3 +40,4 @@ for k=1:16
     imshow(uint8(xr), []);
     pause(1);
 end
+
