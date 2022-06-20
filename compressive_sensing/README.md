@@ -21,3 +21,16 @@ VIDEOS
 ### NPTEL
 1. https://nptel.ac.in/courses/117105081
 
+### CS Reference Examples
+1. [Research Gate](https://www.researchgate.net/publication/271290796_Matlab_code_for_compressed_sensing_reconstruction_with_any_filters?channel=doi&linkId=54c4a7850cf256ed5a954a07&showFulltext=true)
+2. [CodeProject](https://www.codeproject.com/Articles/852910/Compressed-Sensing-Intro-Tutorial-w-Matlab)
+3. [Stuart Gibson](https://in.mathworks.com/matlabcentral/fileexchange/41792-simple-compressed-sensing-example)
+4. [Marcos Bolanos](https://in.mathworks.com/matlabcentral/fileexchange/33813-compressive-sensing-simple-example)
+5. [Cleve Moler](https://in.mathworks.com/company/newsletters/articles/magic-reconstruction-compressed-sensing.html)
+6. [Rip's Applied Math Blog](https://rip94550.wordpress.com/2011/03/28/compressed-sensing-the-l1-norm-finds-sparse-solutions/)
+7. [Compressive Sensing MRI](https://ranger.uta.edu/~huang/R_CSMRI.htm)
+8. [1-magic](https://archive.siam.org/pdf/news/1035.pdf)
+9. [Numerical Tour](https://www.numerical-tours.com/matlab/sparsity_2_cs_images/)
+10. [OpenICS](https://www.softwareimpacts.com/article/S2665-9638(21)00028-2/pdf)
+11. [DSP Stack Exchange](https://dsp.stackexchange.com/questions/10267/compressive-sensing-through-matlab-codes)
+
