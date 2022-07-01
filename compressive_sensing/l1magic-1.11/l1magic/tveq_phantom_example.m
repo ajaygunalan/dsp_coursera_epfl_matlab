@@ -7,12 +7,9 @@
 % Email: jrom@acm.caltech.edu
 % Created: October 2005
 %
-
-
 path(path, './Optimization');
 path(path, './Measurements');
 path(path, './Data');
-
 
 % Phantom 
 n = 256;

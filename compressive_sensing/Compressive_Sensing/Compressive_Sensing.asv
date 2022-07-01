@@ -27,7 +27,9 @@ reset(s);
  
  
 figure
-plot(x, 'g')
+sub
+plot(x, 'k', 'LineWidth', 2)
 hold on
-plot(xp, 'b--o')
+plot(xp)
+ 
  

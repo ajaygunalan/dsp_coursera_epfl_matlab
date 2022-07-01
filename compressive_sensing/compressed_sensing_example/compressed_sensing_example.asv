@@ -40,8 +40,9 @@
 
 %%___INPUT IMAGE___
 clear, close all, clc
-A = imread('cameramanlocal.tif');
-A = imresize(A,0.0958);
+inputImage = imread('cameramanlocal.tif');
+
+A = imresize(inputImage,0.0958);
 % A = inputImage([50:99],[50:99]);
 x = double(A(:));
 n = length(x);
