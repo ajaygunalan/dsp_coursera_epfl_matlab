@@ -51,7 +51,7 @@ x = double(A(:));
 n = length(x);
 
 %% 1. Design Sampling Matrix
-m = 250; % NOTE: small error still present after increasing m to 1500;
+m = 300; % NOTE: small error still present after increasing m to 1500;
 SamplingMat = randn(m,n);
     %__ALTERNATIVES TO THE ABOVE MEASUREMENT MATRIX___ 
     %SamplingMat = (sign(randn(m,n))+ones(m,n))/2; % micro mirror array (mma) e.g. single
@@ -69,7 +69,7 @@ for ii = 1:n
     ii;
     ek = zeros(1,n);
     ek(ii) = 1;
-    TransformDomain = idct(ek)';
+    TransformDomain = dct(ek)';
     Theta(:,ii) = SamplingMat*TransformDomain;
 end
 
@@ -106,9 +106,10 @@ for ii = 1:n
 end
 
 figure('name','Compressive sensing image reconstructions')
-subplot(1,3,1), imagesc(reshape(x,50,50)), xlabel('original'), axis image
-subplot(1,3,2), imagesc(reshape(x2,50,50)), xlabel('least squares'), axis image
-subplot(1,3,3), imagesc(reshape(x1,50,50)), xlabel('basis pursuit'), axis image
+subplot(2,2,1), imagesc(reshape(x,50,50)), xlabel('original'), axis image
+subplot(2,2,2), imagesc(reshape(x2,50,50)), xlabel('least squares'), axis image
+subplot(2,2,3), imagesc(reshape(x1,50,50)), xlabel('basis pursuit'), axis image
+subplot(2,2,4), imshow(SamplingMat), xlabel('sampling pattern'), axis image
 colormap gray
 
 

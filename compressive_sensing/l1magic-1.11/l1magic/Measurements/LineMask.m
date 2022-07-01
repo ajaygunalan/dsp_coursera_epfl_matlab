@@ -33,7 +33,7 @@ for ll = 1:L
 
 end
 
-
+plot(M);
 % upper half plane mask (not including origin)
 Mh = zeros(N);
 Mh = M;

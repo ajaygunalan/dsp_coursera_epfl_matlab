@@ -17,7 +17,9 @@ path(path, './Data');
 n = 256;
 N = n*n;
 X = phantom(n);
+imwrite(X,'phantom.png');
 x = X(:);
+
 %% 1. Design Sampler
 % number of radial lines in the Fourier domain
 L = 22;
@@ -38,9 +40,9 @@ xp = tveq_logbarrier(xbp, Sampler, At, y, 1e-1, 2, 1e-8, 600);
 Xtv = reshape(xp, n, n);
 %% 5. Display the result
 figure('name','Compressive sensing image reconstructions')
-subplot(1,4,1), imshow(X), xlabel('original'), axis image
-subplot(1,4,2), imshow(Xbp), xlabel('least squares'), axis image
-subplot(1,4,3), imshow(Xtv), xlabel('basis pursuit'), axis image
-subplot(1,4,4), imshow(Xtv), xlabel('sampling pattern'), axis image
+subplot(2,2,1), imshow(X), xlabel('original'), axis image
+subplot(2,2,2), imshow(Xbp), xlabel('least squares'), axis image
+subplot(2,2,3), imshow(Xtv), xlabel('basis pursuit'), axis image
+subplot(2,2,4), imshow(Xtv), xlabel('sampling pattern'), axis image
 colormap gray
 

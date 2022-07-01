@@ -1,0 +1,33 @@
+clear all; close all; clc
+%% 1. Load data
+imdata = imread('phantom.png');
+
+
+%% 2. Get Fourier Transform of an image
+F = fft2(imdata);
+% Fourier transform of an image
+S = abs(F);
+figure(3);
+%get the centered spectrum
+Fsh = fftshift(F);
+figure(4);imshow(abs(Fsh),[]);title('Centered fourier transform of Image')
+%apply log transform
+S2 = log(1+abs(Fsh));
+figure(5);imshow(S2,[]);title('log transformed Image')
+%reconstruct the Image
+F = ifftshift(Fsh);
+f = ifft2(F);
+figure(6);imshow(f,[]),title('reconstructed Image')
+
+%%  5. Plot the Result
+subplot(2,3,1)
+imshow(imdata)
+title('image')
+
+subplot(2,3,2)
+imshow(S,[]);
+title('Fourier transform of an image');
+
+subplot(3,1,3)
+plot(y)
+title('DCT Transform')
