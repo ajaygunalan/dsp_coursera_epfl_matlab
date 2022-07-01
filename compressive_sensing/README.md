@@ -4,6 +4,15 @@
 
 
 
+### Steps
+1. Change the sample pattern in fft/dct.
+2. Change the basis.
+3. Chnage the optimization algorithm.
+4. Implement in hardware.
+5. Combine with new motion estimation or denoise and publish. 
+
+
+
 ### Wavlets
 1. https://www.youtube.com/watch?v=jclknhNJBrE
 2. https://github.com/dynamicslab/databook_matlab/blob/master/CH02/CH02_SEC06_4_Wavelet.m
