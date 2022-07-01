@@ -1,6 +1,6 @@
 ### To Do:
 1. Plot the sampling pattern in l2 demo.
-2. Understanding on how they combined `SamplingMat` & `TransformDomain ` in `tveq_phantom_example` & `compressed_sensing_example`.
+2. Understanding on how they combined `SamplingMat` & `TransformDomain ` in `tveq_phantom_example` & `compressed_sensing_examplecompressed_sensing_example`.
 
 
 
