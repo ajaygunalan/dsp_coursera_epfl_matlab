@@ -13,17 +13,17 @@
 % Programming v1.11 by J. Candes and J. Romberg, Caltech, 2005. 
 %
 %___VARIABLES___
-% x = original signal (nx1) y = compressed signal (mx1) Phi = measurement
-% matrix (mxn) Psi = Basis functions (nxn) Theta = Phi * Psi (mxn) s =
+% x = original signal (nx1) y = compressed signal (mx1) SamplingMat = measurement
+% matrix (mxn) TransformDomain = Basis functions (nxn) Theta = SamplingMat * TransformDomain (mxn) s =
 % sparse coefficient vector (to be determined) (nx1)
 %
 %___PROBLEM___
 % Invert the matrix equation y = Theta * s and therefore recover hat_x as
-% k-sparse linear combination of basis functions contained in Psi. Note
-% also that y = Phi * x.
+% k-sparse linear combination of basis functions contained in TransformDomain. Note
+% also that y = SamplingMat * x.
 %
 %___SOLUTION___
-% Let Phi be a matrix of i.i.d. Gaussian variables. Solve matrix inversion
+% Let SamplingMat be a matrix of i.i.d. Gaussian variables. Solve matrix inversion
 % problem using basis pursuit (BP).
 
 %___CREATED___
@@ -37,8 +37,12 @@
 % The code below is my interpretation of Baraniuk's compressed sensing
 % article. I don't claim to be an authority on the subject!
 
-
-%%___INPUT IMAGE___
+%% Points
+% n is the length of the signal vector; In this case, 2500= 50*50.
+% m is the length of the measurement vector; In this case, 250.
+% SamplingMat is m by n.
+% TransformDomain n by n.
+%% 0. Load the image
 clear, close all, clc
 A = imread('cameramanlocal.tif');
 A = imresize(A,0.0958);
@@ -46,26 +50,27 @@ A = imresize(A,0.0958);
 x = double(A(:));
 n = length(x);
 
-%% ___MEASUREMENT MATRIX___
+%% 1. Design Sampling Matrix
 m = 250; % NOTE: small error still present after increasing m to 1500;
-Phi = randn(m,n);
+SamplingMat = randn(m,n);
     %__ALTERNATIVES TO THE ABOVE MEASUREMENT MATRIX___ 
-    %Phi = (sign(randn(m,n))+ones(m,n))/2; % micro mirror array (mma) e.g. single
-    %pixel camera Phi = orth(Phi')'; % NOTE: See Candes & Romberg, l1
+    %SamplingMat = (sign(randn(m,n))+ones(m,n))/2; % micro mirror array (mma) e.g. single
+    %pixel camera SamplingMat = orth(SamplingMat')'; % NOTE: See Candes & Romberg, l1
     %magic, Caltech, 2005.
 
-%___COMPRESSION___
-y = Phi*x;
+%% 2. Sample the data to obtain the measurement.
+y = SamplingMat*x;
 
+%% 3. Transform into sparse domain.  
 %___THETA___
-% NOTE: Avoid calculating Psi (nxn) directly to avoid memory issues.
+% NOTE: Avoid calculating TransformDomain (nxn) directly to avoid memory issues.
 Theta = zeros(m,n);
 for ii = 1:n
     ii;
     ek = zeros(1,n);
     ek(ii) = 1;
-    psi = idct(ek)';
-    Theta(:,ii) = Phi*psi;
+    TransformDomain = idct(ek)';
+    Theta(:,ii) = SamplingMat*TransformDomain;
 end
 
 %___l2 NORM SOLUTION___ s2 = Theta\y; %s2 = pinv(Theta)*y
@@ -87,8 +92,8 @@ for ii = 1:n
     ii;
     ek = zeros(1,n);
     ek(ii) = 1;
-    psi = idct(ek)';
-    x2 = x2+psi*s2(ii);
+    TransformDomain = idct(ek)';
+    x2 = x2+TransformDomain*s2(ii);
 end
 
 x1 = zeros(n,1);
@@ -96,8 +101,8 @@ for ii = 1:n
     ii;
     ek = zeros(1,n);
     ek(ii) = 1;
-    psi = idct(ek)';
-    x1 = x1+psi*s1(ii);
+    TransformDomain = idct(ek)';
+    x1 = x1+TransformDomain*s1(ii);
 end
 
 figure('name','Compressive sensing image reconstructions')

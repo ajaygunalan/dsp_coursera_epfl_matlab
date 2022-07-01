@@ -11,19 +11,27 @@
 %minimization on matlab.
 
 %This example was very good for illustrating how L1 minimization can
-%identify a sparse vector. Here x is the sparse vector. A is the kxN
-%incoherent matrix and B are the coefficients. The example shows how we can
+%identify a sparse vector. Here x is the sparse vector. SamplingMat is the kxN
+%incoherent matrix and y are the coefficients. The example shows how we can
 %find the original x. xp should be approximately equal to x.
+
+%% Points
+% n is the length of the signal vector; In this case, 10.
+% m is the length of the measurement vector; In this case, 250.
+% SamplingMat is m by n.
+% TransformDomain n by n.
+
 
 s=RandStream('mt19937ar');
 %RandStream.setDefaultStream(s);
 reset(s);
-
-
- x=[0, 0, 0.319184, 0, 1.65857, 0, 0, 0, -1.0439, 0]'; %original sparse vector
- A=randn(s,10,5);
- B=A'*x;
- xp = l1eq_pd(x, A', 1, B)     %l1 minimization using L1-MAGIC
+%% 0. Load the image
+%original sparse vector.
+x=[0, 0, 0.319184, 0, 1.65857, 0, 0, 0, -1.0439, 0]'; %original sparse vector
+%% 1. Design Sampling Matrix
+ SamplingMat=randn(s,10,5);
+ y=SamplingMat'*x;
+ xp = l1eq_pd(x, SamplingMat', 1, y)     %l1 minimization using L1-MAGIC
  
  
 figure
