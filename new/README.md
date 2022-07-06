@@ -1,5 +1,10 @@
 ## Following [Naushad_TIP2017](https://in.mathworks.com/matlabcentral/fileexchange/62713-naushad_tip2017) from theis [paper](https://doi.org/10.1109/TIP.2017.2700719).
 
+## To Do
+1. make sure all problems are working in generate problems
+2. Install spgll
+## Done
+
 ### Main Dependencies:
 #### 1. [Sparco](https://github.com/MPF-Optimization-Laboratory/Sparco)
 
@@ -16,4 +21,4 @@
 
 Other realted stuff:
 1. [Spot – A Linear-Operator Toolbox](http://www.cs.ubc.ca/labs/scl/spot/)
-2. []()
+
