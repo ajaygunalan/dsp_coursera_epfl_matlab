@@ -1,0 +1,121 @@
+# jemdoc: menu{MENU}{generate.html}, notime
+= Generating Problems
+
+== Contents
+
+~~~
+{}{raw}
+<div><ul>
+<li><a href="#1">Syntax</a></li>
+<li><a href="#2">Problem's documentation</a></li>
+<li><a href="#3">List of problems</a></li>
+<li><a href="#4">Flags</a></li>
+</ul></div>
+~~~
+
+~~~
+{}{raw}
+<a name="1"></a>
+~~~
+== Syntax
+The gateaway function generateProblem is the single interface to all
+problems in the collection. Each problem can be instanciated by calling
+generateProblem with a unique problem-identifier number, optional flags
+and keyword-value pairs:
+
+~~~
+{}{}
+P = generateProblem(id, [[key1,value1 | flag1],...]);
+~~~
+
+This command has a single output structure P which encodes all parts of 
+the instanciated problem. The details of the problem structure are discussed
+[guide_problem2.html here]. The optional keywords-value pairs control various
+aspects of the problem formulation, such as the problem size or the noise level.
+In this way, a single problem definition can yield a whole family related problem
+instances.
+
+For instance, problem five generates a signal of length /n/ from a few atoms in
+a DCT-Dirac dictionnary. Two versions of this problem can be generated as follows :
+
+~~
+{}{}
+#includeraw{sample_generate.html}
+~~
+
+Sometimes it is more convenient to remember the problem name
+rather than its number. Therefore we can equivalently instantiate
+problem 5 by its name 'gcosspike'
+
+
+~~~
+{}{}
+P = generateProblem('gcosspike');
+~~~
+
+~~~
+{}{raw}
+<a name="2"></a>
+~~~
+== Problem's documentation
+
+Documentation for each problem, including a list of available keyword-value pairs,
+the problem source, and relevant citations, can be retrieved [problems.html here]
+or with the call
+
+~~~
+{}{}
+generateProblem(id, 'help');
+~~~
+
+
+~~~
+{}{raw}
+<a name="3"></a>
+~~~
+== List of problems
+
+A full list of of all available problem identifiers in the collection can be 
+retrieved via the command 
+
+~~~
+{}{}
+pList = generateProblem('list');
+~~~
+
+This list contains the problem numbers of all known problems.
+When documenting the results of a solver on a certain problem it
+is better to use the problem name rather than its number. One way
+to get the name is by instantiating the problem and looking at
+the +info.name+ field. Alternatively the name can be queried using
+the generateProblem function with the +getname+ flag.
+
+~~~
+{}{}
+name = generateProblem(5,'getname')
+name = 
+    gcosspike
+~~~
+name = generateProblem(5,'getname');
+
+~~~
+{}{}
+pList = generateProblem('list');
+for id = pList
+    P = generateProblem(id);
+    disp(P.info.title);
+end
+~~~
+
+prints the names of every problem in the collection. The field +info.title+
+is common to all problem structures.
+
+~~~
+{}{raw}
+<a name="4"></a>
+~~~
+== Flags
+
+Other commonly supported flags are +'show'+ for displaying example figures 
+associated with the problem and +'noseed'+ to suppress the initialization of the 
+random number generators.

@@ -1,4 +1,4 @@
-clear;clc,
+clear all; close all;clc,
 %%settings
 scales = 4;
 useGPU=0;

@@ -44,14 +44,14 @@
 % TransformDomain n by n.
 %% 0. Load the image
 clear, close all, clc
-A = imread('cameramanlocal.tif');
-A = imresize(A,0.0958);
-% A = inputImage([50:99],[50:99]);
+A = imread('phantom.png');
+A = imresize(A,0.1953);
+% A = A([50:99],[50:99]);       
 x = double(A(:));
 n = length(x);
 
 %% 1. Design Sampling Matrix
-m = 300; % NOTE: small error still present after increasing m to 1500;
+m = 150; % NOTE: small error still present after increasing m to 1500;
 SamplingMat = randn(m,n);
     %__ALTERNATIVES TO THE ABOVE MEASUREMENT MATRIX___ 
     %SamplingMat = (sign(randn(m,n))+ones(m,n))/2; % micro mirror array (mma) e.g. single
@@ -72,12 +72,14 @@ for ii = 1:n
     TransformDomain = dct(ek)';
     Theta(:,ii) = SamplingMat*TransformDomain;
 end
-
+%%
 %___l2 NORM SOLUTION___ s2 = Theta\y; %s2 = pinv(Theta)*y
 s2 = pinv(Theta)*y;
+% x2 = reshape(s2,50,50);
 
 %___BP SOLUTION___
 s1 = l1eq_pd(s2,Theta,Theta',y,5e-3,20); % L1-magic toolbox
+% x1 = reshape(s1,50,50);
 %x = l1eq_pd(y,A,A',b,5e-3,32);
 
 %___DISPLAY SOLUTIONS___
