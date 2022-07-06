@@ -1,0 +1,105 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red26\green26\blue26;}
+\paperw11900\paperh16840\vieww31000\viewh14900\viewkind0
+\deftab720
+\pard\tx12260\tx12700\pardeftab720\ri-4428
+
+\f0\fs28 \cf0 Naushad_TIP2017: Codes for CS based image reconstruction using matched wavelet estimated from compressively sensed images.\
+\pard\pardeftab720
+\cf0 =========================================================================\
+\pard\pardeftab720\ri-4154
+\cf0 \'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\pard\pardeftab720
+\cf0 % %% Copyright Naushad Ansari and Anubha Gupta, 2017.\
+% %% Please feel free to use this open-source code for research purposes \
+% %% only. \
+% %%\
+% %% Please cite the following paper while using the results:\
+% %%\
+% %% N. Ansari, and A. Gupta, "Image Reconstruction using Matched Wavelet\
+% %% Estimated from Data Sensed Compressively using Partial Canonical \
+% %% Identity Matrix," Accepted, in IEEE Transactions on Image \
+% %% Processing, 2017. \
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+How to run:\
+First run the function \'91FileSetup\'92 that adds all the folders to path \
+and then run any of the functions discussed in section (c) in this ReadMe\
+file.\
+\
+a. Introduction\
+---------------\
+\
+Thank you for downloading Naushad_TIP2017. This code is for CS based image\
+reconstruction using matched wavelet designed from compressively sensed \
+images itself, as presented in [1]. In case of help, please feel free to \
+contact me at: naushada@iiitd.ac.in/ naushadansari09797@gmail.com\
+\
+b. Description of folders\
+-------------------------\
+\
+1. Supporting functions ==> contains supporting functions to be used in \
+codes. For example, functions to calculate PSNR, to design sensing matrices,\
+to perform downsampling etc. \
+\
+2. Images_for_experiments ==> this folder contains all the images used in \
+the experiments.\
+\
+3. Matched wavelet design ==> folder that contains functions to design\
+matched wavelet.\
+\
+c. Description of functions\
+---------------------------\
+\
+1. FileSetup ==> function to add all the folders in path.\
+\
+2. SensingMatrices_comparison ==> this .m file compares the performance of \
+difference sensing matrices as presented in Fig. 4 and 5 of paper.\
+\
+3. Fun_SensingMatrices_comparison ==> function to support code in [1]\
+\
+4. WaveletDecompositionMethod_comparison ==> this function compares the\
+CS-based reconstruction using proposed and existing wavelet decomposition \
+methods. Results are presented in Fig. 7 of paper.\
+\
+5. Wavelet_comparison ==> this function compares the CS based reconstruction\
+performance with existing and matched wavelets. Results are presented in \
+Table II of paper.\
+\
+d. Supporting code to download:\
+-------------------------------\
+This function uses some of the operators from sparco toolbox and uses solver\
+\'91spgl1\'92 to solve CS equations. \
+1. spgl1 ==> MATLAB solver [2] is used for solving CS based reconstruction \
+problems. Particularly, 'spgl1\'92 is used from this solver. Please download it\
+from "{\field{\*\fldinst{HYPERLINK "http://www.cs.ubc.ca/~mpf/spgl1/"}}{\fldrslt \ul http://www.cs.ubc.ca/~mpf/spgl1/}}\'93.\
+\
+2. sparco ==> sparco toolbox [3] is used for the some of the operators\
+like, \'91opWavelet\'92, \'91opGaussian\'92. This toolbox can be downloaded from\
+\'93{\field{\*\fldinst{HYPERLINK "http://www.cs.ubc.ca/labs/scl/sparco/"}}{\fldrslt http://www.cs.ubc.ca/labs/scl/sparco/}}\'93.\
+\
+e. References:\
+--------------\
+\
+[1]. N. Ansari, and A. Gupta, "Image Reconstruction using Matched Wavelet \
+Estimated from Data Sensed Compressively using Partial Canonical Identity\
+Matrix," Accepted, in IEEE Transactions on Image \
+Processing, 2017.\
+\
+[2]. E. van den Berg and M. P. Friedlander, \'93Probing the Pareto frontier \
+for basis pursuit solutions,\'94 SIAM Journal on Scientific Computing, vol. \
+31, no. 2, pp. 890\'96912, 2008. [Online].\
+\
+[3]. \cf2 \expnd0\expndtw0\kerning0
+E. v. Berg, M. P. Friedlander, G. Hennenfent, F. Herrmann, R. Saab, and\
+O. Y\uc0\u305 lmaz, \'93Sparco: A testing framework for sparse reconstruction,\'94\
+Dept. Computer Science, University of British Columbia, Vancouver,\
+Tech. Rep. TR-2007-20, October 2007.\
+\pard\pardeftab720
+\cf0 \kerning1\expnd0\expndtw0 \
+\
+\
+\pard\pardeftab720\sl276\slmult1\sa200
+\cf0 \
+}
