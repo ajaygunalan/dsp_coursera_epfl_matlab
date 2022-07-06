@@ -12,6 +12,7 @@
 5. Combine with new motion estimation or denoise and publish. 
 
 
+* [Numerical Tour: Compressed Sensing of Images](https://www.numerical-tours.com/matlab/sparsity_2_cs_images/)
 
 ### Wavlets
 1. https://www.youtube.com/watch?v=jclknhNJBrE
