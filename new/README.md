@@ -8,12 +8,11 @@
 ](https://friedlander.io/software/sparco/)
 
 ##### Sparco Dependencies:
-1. [Rice Wavelet Toolbox](https://www.ece.rice.edu/dsp/software/rwt.shtml)
+1. [Rice Wavelet Toolbox](https://github.com/ricedsp/rwt)
 2. [CurveLab](http://www.curvelet.org/)
 
 
 #### 2. [SPGL1](https://friedlander.io/spgl1/)
-
 
 Other realted stuff:
 1. [Spot – A Linear-Operator Toolbox](http://www.cs.ubc.ca/labs/scl/spot/)
