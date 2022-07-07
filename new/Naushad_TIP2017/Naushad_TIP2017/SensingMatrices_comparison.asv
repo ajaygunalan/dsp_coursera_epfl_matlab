@@ -47,14 +47,13 @@ MaxIter = 1;                               % Number of iterations to perform exp
 % LEVELS (default 5) gives the number of levels in the transformation
 % The Boolean field REDUNDANT (default false) indicates whether the wavelet is redundant. 
 % TYPE (default 'min') indictates what type of solution is desired; 'min' for minimum phase, 'max' for maximum phase, and 'mid' for mid-phase solutions.
-Wt = opWavelet2(BlkLen,BlkLen,'Daubechies',8,3,false,'min');
-% Wt = opWavelet(BlkLen,'Daubechies'); 
+Wt = opWavelet(BlkLen,'Daubechies'); 
 
                                          % transpose of the wavelet operator 
 
 % for Partial Canonical Identity (PCI) sesning matrix
 % WPt = opWavelet(n1,n2,'Daubechies',8,3,'min'); % applied on full image at once
-WPt = opWavelet2(n1,n2,'Daubechies',8,3,false,'min');  % applied on full image at once
+WPt = opWavelet(n1,'Daubechies',8,3,'min'); % applied on full image at once
 
                                         % transpose of the wavelet operator
 % (operaor 'psi' in paper is equivalent to Wt or WPt)                                        
