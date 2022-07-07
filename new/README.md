@@ -13,8 +13,14 @@
 ](https://friedlander.io/software/sparco/)
 
 ##### Sparco Dependencies:
+
 1. [Rice Wavelet Toolbox](https://github.com/ricedsp/rwt)
 2. [CurveLab](http://www.curvelet.org/)
+
+##### Sparco Issues
+
+1. Issues in 'opWavelet2'
+2. Not installed [fftw](https://www.fftw.org/) needed for calling `fdct_wrapping_mex` in `CurveLab`.
 
 
 #### 2. [SPGL1](https://friedlander.io/spgl1/)
