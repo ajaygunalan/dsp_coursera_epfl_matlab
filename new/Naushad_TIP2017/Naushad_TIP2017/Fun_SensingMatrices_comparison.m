@@ -47,13 +47,14 @@ for k = 1:length(SampRat)                        % Iterate for different samplin
     recImg = zeros(n1,n2);                       % initialize recoonstructed image
     for i = 0:NoOfBlk1-1                         % iterate for every block in the image
         for j = 0:NoOfBlk2-1
-            
+ 
             img1 = img(BlkLen*i+1:BlkLen*(i+1),BlkLen*j+1:BlkLen*(j+1)); % pick a block of image
                                 
             % reconstruction with Berboulli sensing matrix
             Rb = opBernoulli(m1,BlkLen*BlkLen);  % Bernoulli sensing matrix
             Ab = opFoG(Rb,Wt);                   % operator A=R*Wt
-            yb = Rb(img1(:),1);                  % compressive measurements
+%             yb = Rb(img1(:),1);                  % compressive measurements
+            yb = Rb*img1(:);
             [recImgB_Blk,timB_Blk(i+1,j+1)] = RecFullImageFromCompImage(Ab,yb,Wt,BlkLen,BlkLen);
                                                % reconstruction of single
                                                % block.
@@ -64,6 +65,8 @@ for k = 1:length(SampRat)                        % Iterate for different samplin
             Rg = opGaussian(m1,BlkLen*BlkLen);  % Gaussian sensing matrix
             Ag = opFoG(Rg,Wt);                  % operator A=R*Wt
             yg = Rg(img1(:),1);                 % compressive measurements
+            yg = Rg*(img1(:);                 % compressive measurements
+            
             [recImgG_Blk,timG_Blk(i+1,j+1)] = RecFullImageFromCompImage(Ag,yg,Wt,BlkLen,BlkLen);
                                               % reconstruction of single
                                               % block.

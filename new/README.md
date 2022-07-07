@@ -1,4 +1,4 @@
-## Following [Naushad_TIP2017](https://in.mathworks.com/matlabcentral/fileexchange/62713-naushad_tip2017) from theis [paper](https://doi.org/10.1109/TIP.2017.2700719).
+## Following [Naushad_TIP2017](https://in.mathworks.com/matlabcentral/fileexchange/62713-naushad_tip2017) from this [paper](https://doi.org/10.1109/TIP.2017.2700719).
 
 
 ### Main Dependencies:
@@ -23,5 +23,9 @@
 
 #### 3. [Spot – A Linear-Operator Toolbox](https://github.com/mpf/spot)
 
-[A Quick Guide to Using Spot](https://www.cs.ubc.ca/labs/scl/spot/guide_quick2.html)_
+[A Quick Guide to Using Spot](https://www.cs.ubc.ca/labs/scl/spot/guide_quick2.html)
 
+
+#### Other Reference
+
+1. [Demo3](http://dgci2014.diism.unisi.it/demos/demo3.pdf)
