@@ -14,7 +14,7 @@ function [recImg,tim] = RecFullImageFromCompImage(A,y,Wt,n1,n2)
 
 options.verbosity = 0;
 tic;
-zrec = spgl1(A,y,[],[],[],options);        % Solve CS problem using 'spgl1' solver
+zrec = spgl1(A,double(y),[],[],[],options);        % Solve CS problem using 'spgl1' solver
 % recImg = reshape(Wt*(zrec,1),n1,n2);
 recImg = reshape(Wt*zrec,n1,n2);
 tim = toc;
