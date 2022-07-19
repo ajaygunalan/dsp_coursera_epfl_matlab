@@ -29,3 +29,13 @@
 #### Other Reference
 
 1. [Demo3](http://dgci2014.diism.unisi.it/demos/demo3.pdf)
+
+
+## Naushad_TIP2017 seems to be too slow. 
+
+Thus following [ABCS](https://doi.org/10.1109/ACCESS.2020.3006861)
+
+### Main Dependencies:
+
+1. [D-AMP Toolbox](https://github.com/ricedsp/D-AMP_Toolbox)
+
