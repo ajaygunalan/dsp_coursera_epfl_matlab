@@ -62,39 +62,35 @@ WPt = opWavelet2(n1,n2,'Daubechies',8,3,false,'min');  % applied on full image a
 %% PSNR and time for the reconstruction
 for iter = 1:MaxIter
     display(sprintf('Code running for %d iteration...',iter));
-    [psnrB(iter,:),psnrG(iter,:),psnrP(iter,:),timB(iter,:),timG(iter,:),timP(iter,:)]=...
-        Fun_SensingMatrices_comparison(img,Wt,WPt,SampRat,BlkLen,n1,n2);
-    
+    [psnrB(iter,:),timB(iter,:)] = Fun_SensingMatrices_comparison(img,Wt,WPt,SampRat,BlkLen,n1,n2);
     % Average psnr and time over different iterations with Bernoulli,
     % Gaussian and PCI sensing matrices.
     avgPsnrB = mean(psnrB);
-    avgPsnrG = mean(psnrG);
-    avgPsnrP = mean(psnrP);
+%     avgPsnrG = mean(psnrG);
+%     avgPsnrP = mean(psnrP);
     
     avgTimB = mean(timB);
-    avgTimG = mean(timG);
-    avgTimP = mean(timP);
+%     avgTimG = mean(timG);
+%     avgTimP = mean(timP);
 end
 
 %% Plot results for psnr and time comparisons
 plot(SampRat,psnrB,'k','LineWidth',1,'marker','.');
 hold on;
-plot(SampRat,psnrG,'k','LineWidth',1,'marker','s');
-hold on;
-plot(SampRat,psnrP,'k','LineWidth',1,'marker','p');
+% plot(SampRat,psnrG,'k','LineWidth',1,'marker','s');
+% hold on;
+% plot(SampRat,psnrP,'k','LineWidth',1,'marker','p');
 set(gca,'XDir','reverse')
 xlabel('Sampling Ratio (in %)','Fontsize',14);
 ylabel('PSNR (in dB)','Fontsize',14);
-legend('Bernoulli Measuerement operator','Gaussian Measuerement operator',...
-    'Proposed Measuerement operator')
+legend('Bernoulli Measuerement operator')
 
 plot(SampRat,timB,'k','LineWidth',1,'marker','.');
 hold on;
-plot(SampRat,timG,'k','LineWidth',1,'marker','s');
-hold on;
-plot(SampRat,timP,'k','LineWidth',1,'marker','p');
+% plot(SampRat,timG,'k','LineWidth',1,'marker','s');
+% hold on;
+% plot(SampRat,timP,'k','LineWidth',1,'marker','p');
 set(gca,'XDir','reverse')
 xlabel('Sampling Ratio (in %)','Fontsize',14);
 ylabel('Time (in secs)','Fontsize',14);
-legend('Bernoulli Measuerement operator','Gaussian Measuerement operator',...
-    'Proposed Measuerement operator')
+legend('Bernoulli Measuerement operator')
