@@ -1,6 +1,6 @@
 ## To Do
 
-1. `Sampler` should be contionous instead of `randn`.
+1. `Sampler` should be contionous instead of `randn` in `CS_Imaging_Demo`.
 
 ## Possible reconstructors  to use and reference. 
 2. `AMP` in  `CS_1D_Demo`.
@@ -11,6 +11,9 @@
 
  Implemment some form this thesis [[Graeme2009Compressive]].
 
+## Questions
+1. Why no transform domain in DAMP?
+2. M-AMP and Others ALGO WORKING 
 
 
 
