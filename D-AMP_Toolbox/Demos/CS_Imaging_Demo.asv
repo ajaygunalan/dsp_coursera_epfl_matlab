@@ -1,6 +1,6 @@
 %Demonstrates compressively sampling and D-AMP recovery of an image.
 
-%addpath(genpath('..'));
+addpath(genpath('..'));
 
 %Parameters
 denoiser1='BM3D';%Available options are NLM, Gauss, Bilateral, BLS-GSM, BM3D, fast-BM3D, and BM3D-SAPCA 
@@ -23,12 +23,7 @@ for j = 1:n
     M(:,j) = M(:,j) ./ sqrt(sum(abs(M(:,j)).^2));
 end
 %convert M matrix into function handle
-Sampler = opMatrix(M);
-
-%psi = opWavelet2(sqrt(n),sqrt(n),'Daubechies',8,3,false,'min');
-%A = opFoG(Measurment,psi);
-%A = opMatrix(M)
-
+sampler = opMatrix(M);
 
 %Compressively sample the image
 y=Sampler*x_0(:);

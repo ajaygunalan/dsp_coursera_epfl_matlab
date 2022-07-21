@@ -1,3 +1,26 @@
+## To Do
+
+1. `Sampler` should be contionous instead of `randn`.
+
+## Possible reconstructors  to use and reference. 
+2. `AMP` in  `CS_1D_Demo`.
+3. `cvx_begin` in `lec6L1vsL2.m`.
+4. `simcosamp` in `lec7ToyExample`. 
+5. `l1eq_pd` in `compressed_sensing_example`.
+6. `spgl1` in `RecFullImageFromCompImage`.
+
+ Implemment some form this thesis [[Graeme2009Compressive]].
+
+
+
+
+
+
+
+
+### Till 21 July
+
+
 ## Following [Naushad_TIP2017](https://in.mathworks.com/matlabcentral/fileexchange/62713-naushad_tip2017) from this [paper](https://doi.org/10.1109/TIP.2017.2700719).
 
 
