@@ -34,19 +34,19 @@ Sampler = opMatrix(M);
 y=Sampler*x_0(:);
 
 %Recover Signal using D-AMP algorithms
-x_hat1 = DAMP(y,iters,height,width,denoiser1,Sampler);
+% x_hat1 = DAMP(y,iters,height,width,denoiser1,Sampler);
 x_hat2 = DAMP(y,iters,height,width,denoiser2,Sampler);
 
 %D-AMP Recovery Performance
-performance1=PSNR(x_0,x_hat1);
+% performance1=PSNR(x_0,x_hat1);
 performance2=PSNR(x_0,x_hat2);
-[num2str(SamplingRate*100),'% Sampling ', denoiser1, '-AMP Reconstruction PSNR=',num2str(performance1)]
+% [num2str(SamplingRate*100),'% Sampling ', denoiser1, '-AMP Reconstruction PSNR=',num2str(performance1)]
 [num2str(SamplingRate*100),'% Sampling ', denoiser2, '-AMP Reconstruction PSNR=',num2str(performance2)]
 
 %Plot Recovered Signals
-subplot(1,3,1);
+subplot(1,2,1);
 imshow(uint8(x_0));title('Original Image');
-subplot(1,3,2);
-imshow(uint8(x_hat1));title([denoiser1, '-AMP']);
-subplot(1,3,3);
+% subplot(1,3,2);
+% imshow(uint8(x_hat1));title([denoiser1, '-AMP']);
+subplot(1,2,2);
 imshow(uint8(x_hat2));title([denoiser2, '-AMP']);
