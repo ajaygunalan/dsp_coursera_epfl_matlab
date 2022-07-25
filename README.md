@@ -1,13 +1,12 @@
 ## To Do
 
 ### Sampler
-
 1. `Sampler` should be contionous instead of `randn` in `CS_Imaging_Demo`.
 
-1. How to convert spiral curve into a matrix so that 
-- when multipled with image it contains pixel value and the rest zero.
+### Key Issues:
+1. How to convert spiral curve into a matrix so that when multipled with image it contains pixel value.
+2. Then, the image being vectorised `img1(:)`. How will it affect the matrix?
 
-2. No with image being vectorised. How to do it?
 
 ### Approach:
 1. Strat with lines and proceed with curves.
