@@ -6,14 +6,14 @@
 ### Key Issues:
 1. How to convert spiral curve into a matrix so that when multipled with image it contains pixel value along that spiral curve.
 2. Then, if the image being vectorised `img1(:)`. How will it affect the matrix?
-3. How this will chnage if the size of the image changes?
-
+3. How this will change if the size of the image changes?
 
 ### Approach:
-1. Strat with lines and proceed with curves.
-2. Ask shunlei and adeel on how they are doing it.
+1. Strat to use `improfile()` & `drawline()` for lines.
+2. Then, Proceed with curves.
 
-## Possible reconstructors  to use and reference. 
+## Reconstruction
+### Possible reconstructors  to use and reference. 
 2. `AMP` in  `CS_1D_Demo`.
 3. `cvx_begin` in `lec6L1vsL2.m`.
 4. `simcosamp` in `lec7ToyExample`. 
