@@ -6,6 +6,7 @@
 ### Key Issues:
 1. How to convert spiral curve into a matrix so that when multipled with image it contains pixel value along that spiral curve.
 2. Then, if the image being vectorised `img1(:)`. How will it affect the matrix?
+3. How this will chnage if the size of the image changes?
 
 
 ### Approach:
