@@ -1,20 +1,52 @@
-%% Points
-% n is the length of the signal vector; In this case, 2500= 50*50.
-% m is the length of the measurement vector; In this case, 250.
-% SamplingMat is m by n.
-% TransformDomain n by n.
-%% 
-clc;
-clear all;
-%% 0. Load the image
-% All images are reszided to 512*512 as reported in paper. You can change it for you. 
-n1=512;    n2=512;                       % size of the image
-                                         % n1 and n2, both should be power of two
-img=im2double(imread('lena512.bmp'));
-img=imresize(img,[n1,n2]);  
-imshow(img);
-%% 1. Design Sampling Matrix
-%% 2. Sample the data to obtain the measurement.
-%% 3. Transform into sparse domain.  
-%% 4. Reconstruct Image
-%% 5. Plot the display
+%Demonstrates compressively sampling and D-AMP recovery of an image.
+
+%addpath(genpath('..'));
+
+%Parameters
+denoiser1='BM3D';%Available options are NLM, Gauss, Bilateral, BLS-GSM, BM3D, fast-BM3D, and BM3D-SAPCA 
+denoiser2='fast-BM3D';
+filename='barbara.png';
+SamplingRate=.2;
+iters=30;
+imsize=128;
+
+ImIn=double(imread(filename));
+x_0=imresize(ImIn,imsize/size(ImIn,1));
+[height, width]=size(x_0);
+n=length(x_0(:));
+m=round(n*SamplingRate);
+
+
+%Generate Gaussian Measurement Matrix
+M=randn(m,n);
+for j = 1:n
+    M(:,j) = M(:,j) ./ sqrt(sum(abs(M(:,j)).^2));
+end
+%convert M matrix into function handle
+Sampler = opMatrix(M);
+
+%psi = opWavelet2(sqrt(n),sqrt(n),'Daubechies',8,3,false,'min');
+%A = opFoG(Measurment,psi);
+%A = opMatrix(M)
+
+
+%Compressively sample the image
+y=Sampler*x_0(:);
+
+%Recover Signal using D-AMP algorithms
+% x_hat1 = DAMP(y,iters,height,width,denoiser1,Sampler);
+x_hat2 = DAMP(y,iters,height,width,denoiser2,Sampler);
+
+%D-AMP Recovery Performance
+% performance1=PSNR(x_0,x_hat1);
+performance2=PSNR(x_0,x_hat2);
+% [num2str(SamplingRate*100),'% Sampling ', denoiser1, '-AMP Reconstruction PSNR=',num2str(performance1)]
+[num2str(SamplingRate*100),'% Sampling ', denoiser2, '-AMP Reconstruction PSNR=',num2str(performance2)]
+
+%Plot Recovered Signals
+subplot(1,2,1);
+imshow(uint8(x_0));title('Original Image');
+% subplot(1,3,2);
+% imshow(uint8(x_hat1));title([denoiser1, '-AMP']);
+subplot(1,2,2);
+imshow(uint8(x_hat2));title([denoiser2, '-AMP']);
