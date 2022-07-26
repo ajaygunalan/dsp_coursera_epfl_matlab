@@ -1,4 +1,4 @@
-%% IMPROFILE EXAMPLE 
+%% Improfile
 % https://in.mathworks.com/help/images/ref/improfile.html
 clear all;
 clc;
@@ -6,7 +6,6 @@ clc;
 I = imread('barbara.png');
 imshow(I);
 hold on;
-
 % Specify x- and y-coordinates that define connected line segments.
 x = [19 427 416 77];
 y = [96 462 37 33];
@@ -31,8 +30,10 @@ figure;
 imshow(thinmask);
 % extract all pixels along this profile
 profile = im(thinmask); % logical indexing
+profile = I(thinmask); % logical indexing
 plot(profile);
-%%
+%% Along user defined curve
+% https://in.mathworks.com/matlabcentral/answers/543278-interactive-pixel-extraction-from-an-image-along-custom-line
 clear all;
 clc;
 I = imread('barbara.png');
@@ -49,7 +50,15 @@ figure
 plot(pixvals,1:length(pixvals),'k'), axis tight, title('pixel values')
 xlabel('pixel greyscale values')
 ylabel('relative position from linestart (0) to lineend')
+%% ROI using polyline
+% https://in.mathworks.com/help/images/ref/images.roi.polyline.html
+clear all;
+clc;
+I = imread('barbara.png');
+imshow(I);
+h = images.roi.Polyline(gca,'Position',[100 150; 200 250; 300 350; 150 450]);
 %%
+
 
 
 
