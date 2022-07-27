@@ -6,6 +6,8 @@
 2. Then, if the image being vectorised `img1(:)`. How will it affect the matrix?
 3. How this will change if the size of the image changes?
 
+**[Create a matrix from a curve](https://in.mathworks.com/matlabcentral/answers/328744-create-a-matrix-from-a-curve)**
+
 ### Reference
 1. [ROI-Based Processing](https://in.mathworks.com/help/images/roi-based-processing.html?s_tid=CRUX_lftnav)
 2. [Polyline](https://in.mathworks.com/help/images/ref/images.roi.polyline.html)
