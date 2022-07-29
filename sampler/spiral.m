@@ -10,8 +10,8 @@ clc;
 dSpirals = 30;
 nSpirals = 20;
 CompresRatio = 0.4; 
-InputImage = imread('barbara1.png');
-[height width] = size(InputImage);
+Image = imread('barbara1.png');
+[height width] = size(Image);
 N = height*width;
 m = round(CompresRatio*N);
 nPoints = m;
@@ -25,20 +25,23 @@ grid on;
 %% Measure the pixel values along the spiral trajectory
 Measure = zeros(m,1);
 for i = 1:m
-    Measure(m) = InputImage(x(i),y(i));
+    Measure(i) = Image(x(i),y(i));
 end
+% mask=ind2sub(size(Image),x,y);
+% Measure=Image(mask);
 %% How to find Sampler (C) matrix in y = CX where:
 % y = Measure
-% X = InputImageV  
-% InputImageV = InputImage(:);
-% Measure = Sampler*InputImageV;
-sz=size(InputImage);
+% X = ImageV  
+% ImageV = Image(:);
+% Measure = Sampler*ImageV;
+sz=size(Image);
 J=sub2ind(sz,x,y);
 I=(1:numel(x))'; %I size is m by 1. 
 SamplerMat=sparse(I,J,1); 
+SamplerMat=sparse(I,J,1,numel(x), prod(sz));
 %% Check the samplerMat by:
-InputImageV = double(InputImage(:));
-MeasureCheck = SamplerMat*InputImageV; %y=Cx
+ImageV = double(Image(:));
+MeasureCheck = SamplerMat*ImageV; %y=Cx
 if(MeasureCheck == Measure)
     fprintf("We have successfully sampled pixel values along spiral trajectory on the give image");
 else
