@@ -1,31 +1,57 @@
 %Demonstrates compressively sampling and D-AMP recovery of an image.
-
-
+clear all;
+clc;
 %Parameters
 denoiser2='fast-BM3D'; %Available options are NLM, Gauss, Bilateral, BLS-GSM, BM3D, fast-BM3D, and BM3D-SAPCA 
 iters=30;
-%%
+%% Goal is to acuqire a pixel values along a spiral trajectory of Image (X).
+% i.e y = Cx;
+% where y is a m*1 measument matrix
+% C is a m*N sampling matrix
+% X is a N by 1 vectorized Image. 
+% N = n1*n2 where n1, n2 are size of the image
 % Paramters for Spiral
-dSpirals = 30;
-nSpirals = 20;
+dSpirals = 200;
+nSpirals = 30;
 CompresRatio = 0.4; 
-InputImage = imread('barbara.png');
-[height width] = size(InputImage);
+Image = rgb2gray(imread('barbara128.png'));
+imshow(Image);
+hold on;
+[height width] = size(Image);
 N = height*width;
-m = round(0.3*N);
-nPoints = sqrt(m);
+m = round(CompresRatio*N);
+nPoints = m;
 theta = linspace(0,360*nSpirals, nPoints);
 % Define Spiral
-x = round((width/2) +(theta/dSpirals).*cosd(theta));
-y = round((height/2) +(theta/dSpirals).*sind(theta));
+x = round(((width/2)+1) +(theta/dSpirals).*cosd(theta));
+y = round(((height/2)+1) +(theta/dSpirals).*sind(theta));
 plot(x,y);
 axis([0 width 0 height]);
 grid on;
-Measure = InputImage(x,y);
+%% Measure the pixel values along the spiral trajectory
+Measure = zeros(m,1);
+for i = 1:m
+    Measure(i) = Image(x(i),y(i));
+end
+% masImage=ind2sub(size(Image),x,y);
+% Measure=Image(mask);
+%% How to find Sampler (C) matrix in y = CX where:
+% y = Measure
+% X = ImageV  
+% ImageV = Image(:);
+% Measure = Sampler*ImageV;
+sz=size(Image);
+J=sub2ind(sz,x,y);
+I=(1:numel(x))'; %I size is m by 1. 
+SamplerMat=sparse(I,J,1); 
+SamplerMat=sparse(I,J,1,numel(x), prod(sz));
+%% Compressively sample the image
+for k = 1:N
+    SamplerMat(:,k) = SamplerMat(:,k) ./ sqrt(sum(abs(SamplerMat(:,k)).^2));
+end
+y=opMatrix(Measure);
+Sampler=opMatrix(SamplerMat);
 %%
-
-%Compressively sample the image
-y=Measure;
 
 %Recover Signal using D-AMP algorithms
 % x_hat1 = DAMP(y,iters,height,width,denoiser1,Sampler);

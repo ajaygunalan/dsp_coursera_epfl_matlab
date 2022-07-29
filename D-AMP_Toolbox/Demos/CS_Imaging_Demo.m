@@ -1,7 +1,8 @@
 %Demonstrates compressively sampling and D-AMP recovery of an image.
 
 %addpath(genpath('..'));
-
+clear all;
+clc;
 %Parameters
 denoiser1='BM3D';%Available options are NLM, Gauss, Bilateral, BLS-GSM, BM3D, fast-BM3D, and BM3D-SAPCA 
 denoiser2='fast-BM3D';
