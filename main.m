@@ -1,37 +1,31 @@
 %Demonstrates compressively sampling and D-AMP recovery of an image.
 
-%addpath(genpath('..'));
 
 %Parameters
-denoiser1='BM3D';%Available options are NLM, Gauss, Bilateral, BLS-GSM, BM3D, fast-BM3D, and BM3D-SAPCA 
-denoiser2='fast-BM3D';
-filename='barbara.png';
-SamplingRate=.2;
+denoiser2='fast-BM3D'; %Available options are NLM, Gauss, Bilateral, BLS-GSM, BM3D, fast-BM3D, and BM3D-SAPCA 
 iters=30;
-imsize=128;
-
-ImIn=double(imread(filename));
-x_0=imresize(ImIn,imsize/size(ImIn,1));
-[height, width]=size(x_0);
-n=length(x_0(:));
-m=round(n*SamplingRate);
-
-
-%Generate Gaussian Measurement Matrix
-M=randn(m,n);
-for j = 1:n
-    M(:,j) = M(:,j) ./ sqrt(sum(abs(M(:,j)).^2));
-end
-%convert M matrix into function handle
-Sampler = opMatrix(M);
-
-%psi = opWavelet2(sqrt(n),sqrt(n),'Daubechies',8,3,false,'min');
-%A = opFoG(Measurment,psi);
-%A = opMatrix(M)
-
+%%
+% Paramters for Spiral
+dSpirals = 30;
+nSpirals = 20;
+CompresRatio = 0.4; 
+InputImage = imread('barbara.png');
+[height width] = size(InputImage);
+N = height*width;
+m = round(0.3*N);
+nPoints = sqrt(m);
+theta = linspace(0,360*nSpirals, nPoints);
+% Define Spiral
+x = round((width/2) +(theta/dSpirals).*cosd(theta));
+y = round((height/2) +(theta/dSpirals).*sind(theta));
+plot(x,y);
+axis([0 width 0 height]);
+grid on;
+Measure = InputImage(x,y);
+%%
 
 %Compressively sample the image
-y=Sampler*x_0(:);
+y=Measure;
 
 %Recover Signal using D-AMP algorithms
 % x_hat1 = DAMP(y,iters,height,width,denoiser1,Sampler);

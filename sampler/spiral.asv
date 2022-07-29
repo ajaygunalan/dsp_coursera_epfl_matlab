@@ -27,13 +27,13 @@ Measure = zeros(m,1);
 for i = 1:m
     Measure(m) = InputImage(x(i),y(i));
 end
-%% How to find Sampler (C) matrix in y = CX where:
+%% How to find C in y = CX where:
 % y = Measure
 % X = InputImageV  
-% InputImageV = InputImage(:);
-% Measure = Sampler*InputImageV;
+InputImageV = InputImage(:);
 
+Measure = S
 sz=size(InputImage);
 J=sub2ind(sz,x,y);
 I=(1:numel(x))'; %I size is m by 1. 
-Sampler=sparse(I,J,1); 
+C=sparse(I,J,1); 
