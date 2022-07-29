@@ -37,7 +37,7 @@ J=sub2ind(sz,x,y);
 I=(1:numel(x))'; %I size is m by 1. 
 SamplerMat=sparse(I,J,1); 
 %% Check the samplerMat by:
-InputImageV = InputImage(:);
+InputImageV = double(InputImage(:));
 MeasureCheck = SamplerMat*InputImageV; %y=Cx
 if(MeasureCheck == Measure)
     fprintf("We have successfully sampled pixel values along spiral trajectory on the give image");
