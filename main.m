@@ -4,7 +4,7 @@
 % C is a m*N sampling matrix
 % X is a N by 1 vectorized Image. 
 % N = n1*n2 where n1, n2 are size of the image
-%Parameters
+%% Parameters
 clear all;
 clc;
 denoiser2='fast-BM3D'; %Available options are NLM, Gauss, Bilateral, BLS-GSM, BM3D, fast-BM3D, and BM3D-SAPCA 
@@ -15,13 +15,20 @@ CompresRatio = 0.4;
 N = height*width;
 m = round(CompresRatio*N);
 %% Get the i, j cord of spiral sampling
-% Paramters for Spiral of
-dSpirals = 200;
-nSpirals = 35;
-nPoints = m  % size of x, y is 1 by m
+% dSpirals = 200;
+% nSpirals = 35;
+% nPoints = m  % size of x, y is 1 by m
+% bPlot = true;
+% [xTraj, yTraj] = spiralSamp(Image, nSpirals, nPoints, dSpirals, bPlot);
+%% Get the i, j cord of lissajous sampling
+A = 60;
+B = 60;
+delta = 0.0;
+t = 10;
+nPoints = m; % size of x, y is 1 by m
 bPlot = true;
-[xTraj, yTraj] = spiralSamp(Image, nSpirals, nPoints, dSpirals, bPlot); 
-%% Measure the pixel values along the spiral trajectory
+[xTraj, yTraj] = lissajousSamp(Image, A, B, delta, t, nPoints, bPlot);
+%% Measure the pixel values along the given trajectory
 Measure = zeros(m,1);
 for i = 1:m
     Measure(i) = Image(xTraj(i),yTraj(i));

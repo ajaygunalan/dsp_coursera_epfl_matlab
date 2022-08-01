@@ -1,0 +1,13 @@
+function [x y] = spiralSamp(Image, a1, a2, dSpirals, bPlot)
+    [height width] = size(Image);
+    theta = linspace(0,360*nSpirals, nPoints);
+    x = round(a1*sind(2*pi*));
+    y = round(a2*sind());
+    if (bPlot)
+        imshow(Image);
+        hold on;
+        plot(x,y);
+        axis([0 width 0 height]);
+        grid on;
+    end
+end
