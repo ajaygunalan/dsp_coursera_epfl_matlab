@@ -4,9 +4,9 @@
 % C is a m*N sampling matrix
 % X is a N by 1 vectorized Image. 
 % N = n1*n2 where n1, n2 are size of the image
-%Parameters
 clear all;
 clc;
+%Parameters
 denoiser2='fast-BM3D'; %Available options are NLM, Gauss, Bilateral, BLS-GSM, BM3D, fast-BM3D, and BM3D-SAPCA 
 iters=30;
 Image = rgb2gray(imread('barbara128.png'));
@@ -14,12 +14,25 @@ Image = rgb2gray(imread('barbara128.png'));
 CompresRatio = 0.4; 
 N = height*width;
 m = round(CompresRatio*N);
+%% Goal is to acuqire a pixel values along a spiral trajectory of Image (X).
+% Paramters for Spiral
+dSpirals = 200;
+nSpirals = 35;
+nPoints = m;
+theta = linspace(0,360*nSpirals, nPoints);
+% Define Spiral
+xTraj = round(((width/2)+1) +(theta/dSpirals).*cosd(theta));
+yTraj = round(((height/2)+1) +(theta/dSpirals).*sind(theta));
+% [xTraj, YyTraj] = spiralSamp(); % they are of size 1 by m.
+plot(xTraj,yTraj);
+axis([0 width 0 height]);
+grid on;
 %% Get the i, j cord of spiral sampling
 % Paramters for Spiral of
 dSpirals = 200;
 nSpirals = 35;
 nPoints = m  % size of x, y is 1 by m
-bPlot = true;
+bpol = true;
 [xTraj, yTraj] = spiralSamp(Image, nSpirals, nPoints, dSpirals, bPlot); 
 %% Measure the pixel values along the spiral trajectory
 Measure = zeros(m,1);
@@ -28,7 +41,7 @@ for i = 1:m
 end
 % masImage=ind2sub(size(Image),xTraj,yTraj);
 % Measure=Image(mask);
-%% Find the Sampler (C) matrix in y = Cx where:
+%% Find the Sampler (C) matrix in y = CX where:
 % y = Measure
 % X = ImageV  
 ImageV = Image(:);
@@ -53,3 +66,4 @@ grid on;
 % hold on;
 subplot(1,2,2);
 imshow(uint8(x_hat2));title([denoiser2, '-AMP']);
+%%

@@ -1,0 +1,4 @@
+function [x y] = spiralSamp(width)
+    xTraj = round(((width/2)+1) +(theta/dSpirals).*cosd(theta));
+    yTraj = round(((height/2)+1) +(theta/dSpirals).*sind(theta));
+end
