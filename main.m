@@ -1,4 +1,4 @@
-%Demonstrates compressively sampling and D-AMP recovery of an image.
+%% Demonstrates compressively sampling and D-AMP recovery of an image.
 clear all;
 clc;
 %Parameters
@@ -12,7 +12,7 @@ iters=30;
 % N = n1*n2 where n1, n2 are size of the image
 % Paramters for Spiral
 dSpirals = 200;
-nSpirals = 30;
+nSpirals = 35;
 CompresRatio = 0.4; 
 Image = rgb2gray(imread('barbara128.png'));
 imshow(Image);
@@ -23,50 +23,40 @@ m = round(CompresRatio*N);
 nPoints = m;
 theta = linspace(0,360*nSpirals, nPoints);
 % Define Spiral
-x = round(((width/2)+1) +(theta/dSpirals).*cosd(theta));
-y = round(((height/2)+1) +(theta/dSpirals).*sind(theta));
-plot(x,y);
+xTraj = round(((width/2)+1) +(theta/dSpirals).*cosd(theta));
+yTraj = round(((height/2)+1) +(theta/dSpirals).*sind(theta));
+plot(xTraj,yTraj);
 axis([0 width 0 height]);
 grid on;
 %% Measure the pixel values along the spiral trajectory
 Measure = zeros(m,1);
 for i = 1:m
-    Measure(i) = Image(x(i),y(i));
+    Measure(i) = Image(xTraj(i),yTraj(i));
 end
-% masImage=ind2sub(size(Image),x,y);
+% masImage=ind2sub(size(Image),xTraj,yTraj);
 % Measure=Image(mask);
 %% How to find Sampler (C) matrix in y = CX where:
 % y = Measure
 % X = ImageV  
-% ImageV = Image(:);
+ImageV = Image(:);
 % Measure = Sampler*ImageV;
 sz=size(Image);
-J=sub2ind(sz,x,y);
-I=(1:numel(x))'; %I size is m by 1. 
+J=sub2ind(sz,xTraj,yTraj);
+I=(1:numel(xTraj))'; %I size is m by 1. 
 SamplerMat=sparse(I,J,1); 
-SamplerMat=sparse(I,J,1,numel(x), prod(sz));
-%% Compressively sample the image
-for k = 1:N
-    SamplerMat(:,k) = SamplerMat(:,k) ./ sqrt(sum(abs(SamplerMat(:,k)).^2));
-end
-y=opMatrix(Measure);
+SamplerMat=sparse(I,J,1,numel(xTraj), prod(sz));
+SamplerMat = full(SamplerMat);
+%% Recover Signal using D-AMP algorithms
+y=Measure;
 Sampler=opMatrix(SamplerMat);
-%%
-
-%Recover Signal using D-AMP algorithms
-% x_hat1 = DAMP(y,iters,height,width,denoiser1,Sampler);
 x_hat2 = DAMP(y,iters,height,width,denoiser2,Sampler);
-
-%D-AMP Recovery Performance
-% performance1=PSNR(x_0,x_hat1);
-performance2=PSNR(x_0,x_hat2);
-% [num2str(SamplingRate*100),'% Sampling ', denoiser1, '-AMP Reconstruction PSNR=',num2str(performance1)]
-[num2str(SamplingRate*100),'% Sampling ', denoiser2, '-AMP Reconstruction PSNR=',num2str(performance2)]
-
-%Plot Recovered Signals
+%% Plot Recovered Signals
 subplot(1,2,1);
-imshow(uint8(x_0));title('Original Image');
-% subplot(1,3,2);
-% imshow(uint8(x_hat1));title([denoiser1, '-AMP']);
+imshow(uint8(Image));title('Original Image with Spiral Sampling');
+hold on;
+plot(xTraj,yTraj);
+axis([0 width 0 height]);
+grid on;
+% hold on;
 subplot(1,2,2);
 imshow(uint8(x_hat2));title([denoiser2, '-AMP']);
