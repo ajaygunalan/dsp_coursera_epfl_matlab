@@ -21,13 +21,20 @@ m = round(CompresRatio*N);
 % bPlot = true;
 % [xTraj, yTraj] = spiralSamp(Image, nSpirals, nPoints, dSpirals, bPlot);
 %% Get the i, j cord of lissajous sampling
-A = 60;
-B = 60;
-delta = 0.0;
-t = 10;
+% A = 60;
+% B = 60;
+% delta = 0.33*pi;
+% t = 10;
+% nPoints = m; % size of x, y is 1 by m
+% bPlot = true;
+% [xTraj, yTraj] = lissajousSamp(Image, A, B, delta, t, nPoints, bPlot);
+%% Get the i, j cord of rosette sampling
+t = 1;
+a = 60;
+k = 10;
 nPoints = m; % size of x, y is 1 by m
 bPlot = true;
-[xTraj, yTraj] = lissajousSamp(Image, A, B, delta, t, nPoints, bPlot);
+[xTraj, yTraj] = rosetteSamp(Image, t, a, k, nPoints,  bPlot);
 %% Measure the pixel values along the given trajectory
 Measure = zeros(m,1);
 for i = 1:m
