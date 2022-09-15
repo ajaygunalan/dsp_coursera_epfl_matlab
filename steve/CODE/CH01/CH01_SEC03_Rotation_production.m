@@ -33,6 +33,9 @@ Sigma = diag([3; 1; 0.5]);
 
 R = Rz*Ry*Rx*Sigma;
 
+[U,S,V] = svd(R);
+R = U*S;
+
 %% Plot sphere and great circles
 [x,y,z] = sphere(250);
 % subplot(1,2,1)

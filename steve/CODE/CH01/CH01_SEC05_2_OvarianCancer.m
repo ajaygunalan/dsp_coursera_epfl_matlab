@@ -14,7 +14,7 @@ set(gca,'FontSize',13), axis tight, grid on
 set(gcf,'Position',[100 100 600 250])
 
 figure, hold on
-for i=1:size(obs,1)
+for i=1:size(obs,1) %1 TO 216 PATIENTS
     x = V(:,1)'*obs(i,:)';
     y = V(:,2)'*obs(i,:)';
     z = V(:,3)'*obs(i,:)';

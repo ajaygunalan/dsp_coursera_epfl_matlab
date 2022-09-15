@@ -14,7 +14,7 @@ sigma = 1;
 Xnoisy = X+sigma*randn(size(X));
 figure, imshow(Xnoisy);
 
-%%
+%% Optimal Threshold
 [U,S,V] = svd(Xnoisy);
 
 N = size(Xnoisy,1);
@@ -23,7 +23,7 @@ r = max(find(diag(S)>cutoff)); % Keep modes w/ sig > cutoff
 Xclean = U(:,1:r)*S(1:r,1:r)*V(:,1:r)';
 figure, imshow(Xclean)
 
-%%
+%% 90% Threshold
 cdS = cumsum(diag(S))./sum(diag(S));  % Cumulative energy
 r90 = min(find(cdS>0.90));  % Find r to capture 90% energy
 

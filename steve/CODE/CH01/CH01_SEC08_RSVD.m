@@ -1,5 +1,5 @@
 clear all, close all, clc
-A=imread('jupiter.jpg');
+A=imread('dog.jpg');
 X=double(rgb2gray(A));
 [U,S,V] = svd(X,'econ');    % Deterministic SVD
 
@@ -8,13 +8,13 @@ q = 1;   % Power iterations
 p = 5;   % Oversampling parameter
 [rU,rS,rV] = rsvd(X,r,q,p); % Randomized SVD
 
-%% Reconstruction
+% Reconstruction
 XSVD = U(:,1:r)*S(1:r,1:r)*V(:,1:r)';     % SVD approx.
 errSVD = norm(X-XSVD,2)/norm(X,2);
 XrSVD = rU(:,1:r)*rS(1:r,1:r)*rV(:,1:r)'; % rSVD approx.
 errrSVD = norm(X-XrSVD,2)/norm(X,2);
 
-%% Plot
+%Plot
 ax1 = axes('Position',[.005 .005 .33 .99]);
 imagesc(X), axis off, colormap gray
 

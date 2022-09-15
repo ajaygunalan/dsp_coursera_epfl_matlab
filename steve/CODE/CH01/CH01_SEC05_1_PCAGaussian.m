@@ -17,7 +17,7 @@ axis([-6 8 -6 8])
 
 %% f_ch01_ex03_1b
 
-Xavg = mean(X,2);                       % Compute mean
+Xavg = mean(X,2);                       % Compute mean of each row
 B = X - Xavg*ones(1,nPoints);           % Mean-subtracted Data
 [U,S,V] = svd(B/sqrt(nPoints),'econ');  % Find principal components (SVD)
 

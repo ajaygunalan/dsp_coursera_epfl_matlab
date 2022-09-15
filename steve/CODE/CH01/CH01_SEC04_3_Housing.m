@@ -1,6 +1,6 @@
 clear all, close all, clc
 
-load housing.data
+load housing
 
 b = housing(:,14);      % housing values in $1000s
 A = housing(:,1:13);    % other factors,

@@ -1,6 +1,8 @@
 ## To Do
 
-
+## QR
+1. FIG_YALE_CONVpanel.m
+2. FIG_10_YALEFACE_LS.m
 
 ## Reconstruction
 ### Possible reconstructors  to use and reference. 
