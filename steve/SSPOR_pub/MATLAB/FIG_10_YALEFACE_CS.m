@@ -46,28 +46,33 @@ r = length(sing(sing>=thresh));
 
 % select training image
 x = X(:,testIdx(1))+meanface;
-% x = X(:,testIdx(1));
-subplot(1,3,1)
+subplot(1,4,1)
+imagesc(reshape(x,32,32)), axis image,  colormap(gray), axis off,
+title("original image + avgface");
+
+% select training image
+
+x = X(:,testIdx(1));
+subplot(1,4,2)
 imagesc(reshape(x,32,32)), axis image,  colormap(gray), axis off,
 title("original image");
+
 
 % R = [100 r 300 600];
 R = [600];
 
-% for i=1:4
+%for i=1:4
     sensors = randperm(m,R);
-    
     mask = zeros(size(x));
     mask(sensors) = x(sensors);
-    subplot(1,3,2)
+    subplot(1,4,3)
     imagesc(reshape(mask,32,32)), axis image,  colormap(gray), axis off,
     title("mask");
 
     
     [~,xcs] = compressedsensingF( x, sensors, m);
-    subplot(1,3,3)
+    subplot(1,4,4)
     imagesc(reshape(xcs,32,32)), axis image,  colormap(gray), axis off,
     title("recoverd cs image");
-    
-% end
+  %end
 

@@ -97,7 +97,8 @@ end
 [~,xcs] = compressedsensingF(x, SamplerV, m);
 subplot(4,4,5)
 imagesc(reshape(xcs,32,32)), axis image,  colormap(gray), axis off,
-title("recoverd cs image - conti");
+title("recoverd cs image");
+
 %% ----------------------------------------------------------------------------------
 %% Demonstrates compressively sampling and D-AMP recovery of an image.
 % i.e y = Cx;
