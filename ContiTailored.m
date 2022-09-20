@@ -54,6 +54,9 @@ r = 300;
 % for r = [50 100 r_opt 300]
 
 %%
+
+
+
 %% Demonstrates compressively sampling and D-AMP recovery of an image.
 % i.e y = Cx;
 % where y is a m*1 measument matrix
@@ -110,7 +113,6 @@ SamplerMat=randn(m,N);
 for j = 1:N
     SamplerMat(:,j) = SamplerMat(:,j) ./ sqrt(sum(abs(SamplerMat(:,j)).^2));
 end
-
 %Compressively sample the image
 Measure=SamplerMat*ImageV;
 %% Recover Signal using D-AMP algorithms
