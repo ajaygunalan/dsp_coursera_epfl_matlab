@@ -70,13 +70,18 @@ title("recoverd cs image - Discrete");
 %Define the trajectory
 %Get the i, j cord of spiral sampling
 Image = reshape(x,32,32);
-dSpirals = 350;
-nSpirals = 15;
+dSpirals = 380;
+nSpirals = 18;
 nPoints = 600;  % size of x, y is 1 by m
 bPlot = false;
 [xTraj, yTraj] = spiralSamp(Image, nSpirals, nPoints, dSpirals, bPlot);
+Traj = [xTraj; yTraj]; %two nPoints are generated 
+Traj = unique(Traj','stable','rows'); %two nPoints are generated 
+Traj = Traj(1:nPoints,:); %chops excess points
+xTraj = Traj(:,1);
+yTraj = Traj(:,2);
+
 %Plot the image and the trajectory
-axis off;
 subplot(4,4,4);
 % subplot(1,2,1);
 axis image,  colormap(gray), axis off, 
@@ -84,19 +89,8 @@ title('Image with Spiral Sampling at 600 pixel');
 imagesc(Image);
 axis off;
 hold on;
-Traj = [xTraj; yTraj]; %two nPoints are generated 
-Traj = unique(Traj','stable','rows'); %two nPoints are generated 
-Traj = Traj(1:nPoints,:); %chops excess points
-xTraj = Traj(:,1);
-yTraj = Traj(:,2);
 % scatter(xTraj,yTraj,'filled','sizedata',szscale*25)
 plot(xTraj,yTraj);
-%Measure the pixel values along the given trajectory
-Measure = zeros(m,1);
-axis on;
-% plot(xTraj,yTraj);
-
-
 
 SamplerV = [];
 for i = 1:nPoints
@@ -108,7 +102,7 @@ end
 %be sampled and m is the length of x.
 [~,xcs] = compressedsensingF(x, SamplerV, m);
 subplot(4,4,5);
-subplot(1,2,2);
+% subplot(1,2,2);
 imagesc(reshape(xcs,32,32)), axis image,  colormap(gray), axis off,
 title("recoverd cs image - conti");
 %% Discrete Tailored Sesning 
@@ -153,18 +147,21 @@ imagesc(reshape(xls+meanface,32,32)), axis image,  colormap(gray), axis off,
 % imagesc(reshape(xls,32,32)), axis image,  colormap(gray), axis off,
 title("Tailored Sensing")
 %% Continuous Compressive Sampling
-QRPoints =(sensors)';
+QRPoints = sensors;
+SamplerV = transpose(SamplerV);
 QRPivotCont = ones(size(SamplerV));
-for i=1:size(SamplerV)
-    for j=1:size(QRPoints)
-        if (SamplerV(i) == QRPoints(j))
+for i=1:r
+    for j=1:r
+        if(SamplerV(i) == QRPoints(j))
             QRPivotCont(i) = SamplerV(i);
 %             disp("its a match");
         end
     end
 end
 
-QRPivotCont = QRPivotCont';
+%remove all ones from the combined masj
+QRPivotCont = QRPivotCont(find(QRPivotCont~=1));
+% QRPivotCont = sensors;
 mask = zeros(size(x));
 mask(QRPivotCont)  = x(QRPivotCont);
 subplot(4,4,10);
