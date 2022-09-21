@@ -49,8 +49,8 @@ x = X(:,testIdx(1));
 subplot(2,3,1)
 imagesc(reshape(x+meanface,32,32)), axis image,  colormap(gray), axis off,
 title("True Image from Training data");
-r = [r_opt]
-r = 300
+r = [r_opt];
+r = 300;
 % for r = [50 100 r_opt 300]
     %% Approximation with r eigenfaces
     xproj = Psi(:,1:r)*Psi(:,1:r)'*x;
