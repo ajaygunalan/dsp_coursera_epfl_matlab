@@ -78,18 +78,27 @@ bPlot = false;
 %Plot the image and the trajectory
 axis off;
 % subplot(4,4,4);
-subplot(1,3,1);
+subplot(1,2,1);
 axis image,  colormap(gray), axis off, 
 title('Image with Spiral Sampling at 600 pixel');
 imagesc(Image);
 axis off;
-scatter(xTraj,yTraj);
+hold on;
+Traj = [xTraj; yTraj]; %two nPoints are generated 
+Traj = unique(Traj','stable','rows'); %two nPoints are generated 
+Traj = Traj(1:nPoints,:) %chops excess points
+xTraj = Traj(:,1);
+yTraj = Traj(:,2);
+[uxy, jnk, idx] = unique([xTraj.',yTraj.'],'rows');
+szscale = histc(idx,unique(idx));
+%Plot Scale of 25 and stars
+scatter(uxy(:,1),uxy(:,2),'filled','sizedata',szscale*25)
+
 %Measure the pixel values along the given trajectory
 Measure = zeros(m,1);
 axis on;
-subplot(1,3,2);
 % plot(xTraj,yTraj);
-plot(25,25);
+
 
 
 SamplerV = [];

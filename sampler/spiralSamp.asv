@@ -3,4 +3,10 @@ function [x y] = spiralSamp(Image, nSpirals, nPoints, dSpirals, bPlot)
     theta = linspace(0,360*nSpirals, nPoints*2);
     x = round(((width/2)+1) +(theta/dSpirals).*cosd(theta));
     y = round(((height/2)+1) +(theta/dSpirals).*sind(theta));
+    traj = [];
+    for i=i:nPoints
+        
+        traj = [traj; x; y];
+        traj = unique(Traj', 'stable','rows');
+    end
 end

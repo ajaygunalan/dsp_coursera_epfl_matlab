@@ -77,18 +77,20 @@ bPlot = false;
 [xTraj, yTraj] = spiralSamp(Image, nSpirals, nPoints, dSpirals, bPlot);
 %Plot the image and the trajectory
 axis off;
-% subplot(4,4,4);
-subplot(1,2,1);
+subplot(4,4,4);
+% subplot(1,2,1);
 axis image,  colormap(gray), axis off, 
 title('Image with Spiral Sampling at 600 pixel');
 imagesc(Image);
 axis off;
 hold on;
-[uxy, jnk, idx] = unique([xTraj.',yTraj.'],'rows');
-szscale = histc(idx,unique(idx));
-%Plot Scale of 25 and stars
-scatter(uxy(:,1),uxy(:,2),'filled','sizedata',szscale*25)
-
+Traj = [xTraj; yTraj]; %two nPoints are generated 
+Traj = unique(Traj','stable','rows'); %two nPoints are generated 
+Traj = Traj(1:nPoints,:); %chops excess points
+xTraj = Traj(:,1);
+yTraj = Traj(:,2);
+% scatter(xTraj,yTraj,'filled','sizedata',szscale*25)
+plot(xTraj,yTraj);
 %Measure the pixel values along the given trajectory
 Measure = zeros(m,1);
 axis on;
@@ -105,7 +107,7 @@ end
 %Pass the vector image x, SamplerMatV which contains the pixel location to
 %be sampled and m is the length of x.
 [~,xcs] = compressedsensingF(x, SamplerV, m);
-% subplot(4,4,5);
+subplot(4,4,5);
 subplot(1,2,2);
 imagesc(reshape(xcs,32,32)), axis image,  colormap(gray), axis off,
 title("recoverd cs image - conti");
