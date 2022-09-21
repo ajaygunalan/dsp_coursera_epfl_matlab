@@ -50,22 +50,22 @@ r = 600;
 % select training image
 x = X(:,testIdx(1));
 %print_face(x+meanface,[figpath,'FIG_10_true']);
-subplot(4,4,1);
-imagesc(reshape(x,32,32)), axis image,  colormap(gray), axis off,
-title("Image from Training data");
+% subplot(4,4,1);
+% imagesc(reshape(x,32,32)), axis image,  colormap(gray), axis off,
+% title("1. Image from Training data");
 % for r = [50 100 r_opt 300]
 %% Discrete Compressive Sampling 
  sensors = randperm(m,r);
  mask = zeros(size(x));
  mask(sensors) = x(sensors);
-subplot(4,4,2);
+subplot(5,2,1);
 imagesc(reshape(mask,32,32)), axis image,  colormap(gray), axis off,
-title("discrete mask at 600 pixel");
+title("2.1 Discrete Mask");
 
 [~,xcs] = compressedsensingF(x, sensors, m);
-subplot(4,4,3);
+subplot(5,2,2);
 imagesc(reshape(xcs,32,32)), axis image,  colormap(gray), axis off,
-title("recoverd cs image - Discrete");
+title("2.2 Reconstructed Image: Discrete Compressive Sensing");
 %% Continuous Compressive Sampling
 %Define the trajectory
 %Get the i, j cord of spiral sampling
@@ -82,10 +82,10 @@ xTraj = Traj(:,1);
 yTraj = Traj(:,2);
 
 %Plot the image and the trajectory
-subplot(4,4,4);
+subplot(5,2,3);
 % subplot(1,2,1);
 axis image,  colormap(gray), axis off, 
-title('Image with Spiral Sampling at 600 pixel');
+title('3.1 Continuous Spiral Mask');
 imagesc(Image);
 axis off;
 hold on;
@@ -101,10 +101,10 @@ end
 %Pass the vector image x, SamplerMatV which contains the pixel location to
 %be sampled and m is the length of x.
 [~,xcs] = compressedsensingF(x, SamplerV, m);
-subplot(4,4,5);
+subplot(5,2,4);
 % subplot(1,2,2);
 imagesc(reshape(xcs,32,32)), axis image,  colormap(gray), axis off,
-title("recoverd cs image - conti");
+title("3.2 Reconstructed Image: Continuous Compressive Sensing");
 %% Discrete Tailored Sesning 
 % Approximation with r eigenfaces
 % xproj = Psi(:,1:r)*Psi(:,1:r)'*x;
@@ -116,9 +116,9 @@ title("recoverd cs image - conti");
 sensors = randperm(m,r);
 mask = zeros(size(x));
 mask(sensors)  = x(sensors);
-subplot(4,4,6);
+subplot(5,2,5);
 imagesc(reshape(mask,32,32)), axis image,  colormap(gray), axis off,
-title("Random mask for tailored reconstruction");
+title("4.1 Discrete Random Mask");
 
 
 % xls = Psi(:,1:r)*(Psi(sensors,1:r)\x(sensors));
@@ -126,9 +126,9 @@ y = x(sensors); %Measured data
 theta=Psi(sensors,1:r);
 xls = Psi(:,1:r)*(theta\y);
 
-subplot(4,4,7);
+subplot(5,2,6);
 imagesc(reshape(xls+meanface,32,32)), axis image,  colormap(gray), axis off,
-title("Random reconstruction with r sensors");
+title("4.2 Reconstructed Image: Tailored Sensing");
 
 % QDEIM with r QR sensors
 [~,~,pivot] = qr(Psi(:,1:r)','vector');
@@ -137,15 +137,15 @@ mask = zeros(size(x));
 %mask(sensors)  = x(sensors)+meanface(sensors);
 % Measure the data at those pivot locations
 mask(sensors)  = x(sensors);
-subplot(4,4,8);
+subplot(5,2,7);
 imagesc(reshape(mask,32,32)), axis image, axis off,
-title("QR sensors Mask")
+title("5.1 QR Optimal Mask")
     
 xls = Psi(:,1:r)*(Psi(sensors,1:r)\x(sensors));
-subplot(4,4,9);
+subplot(5,2,8);
 imagesc(reshape(xls+meanface,32,32)), axis image,  colormap(gray), axis off,
 % imagesc(reshape(xls,32,32)), axis image,  colormap(gray), axis off,
-title("Tailored Sensing")
+title("5.2 Reconstructed Image: Tailored Sensing (Optimal Mask)")
 %% Continuous Compressive Sampling
 QRPoints = sensors;
 SamplerV = transpose(SamplerV);
@@ -164,15 +164,15 @@ QRPivotCont = QRPivotCont(find(QRPivotCont~=1));
 % QRPivotCont = sensors;
 mask = zeros(size(x));
 mask(QRPivotCont)  = x(QRPivotCont);
-subplot(4,4,10);
+subplot(5,2,9);
 imagesc(reshape(mask,32,32)), axis image, axis off,
-title("QR Pivot Plus Continous Mask")
+title("6.1 QR Optimal Mask Continuous")
     
 xls = Psi(:,1:r)*(Psi(QRPivotCont,1:r)\x(QRPivotCont));
-subplot(4,4,11);
+subplot(5,2,10);
 imagesc(reshape(xls+meanface,32,32)), axis image,  colormap(gray), axis off,
 % imagesc(reshape(xls,32,32)), axis image,  colormap(gray), axis off,
-title("Tailored Sensing Continous case")
+title("6.2 Reconstructed Image: Tailored Sensing (Continuous)")
 
 
 
