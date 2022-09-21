@@ -173,6 +173,3 @@ subplot(5,2,10);
 imagesc(reshape(xls+meanface,32,32)), axis image,  colormap(gray), axis off,
 % imagesc(reshape(xls,32,32)), axis image,  colormap(gray), axis off,
 title("6.2 Reconstructed Image: Tailored Sensing (Continuous)")
-
-
-
